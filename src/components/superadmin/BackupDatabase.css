@@ -1,0 +1,298 @@
+/* BackupDatabase.css */
+.backup-container {
+    padding: 2rem;
+    background-color: var(--bg-light);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .backup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .header-icon {
+    font-size: 1.5rem;
+    color: var(--primary);
+  }
+  
+  .backup-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+  }
+  
+  .settings-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  
+  .settings-button:hover {
+    background-color: var(--light);
+  }
+  
+  .backup-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 992px) {
+    .backup-content {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  .backup-card {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .card-icon {
+    font-size: 1.25rem;
+    color: var(--primary);
+  }
+  
+  .backup-description {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  
+  .backup-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .stat-item {
+    background-color: var(--light);
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-bottom: 0.25rem;
+  }
+  
+  .stat-value {
+    font-weight: 500;
+  }
+  
+  .backup-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .backup-btn:hover:not(:disabled) {
+    background-color: var(--primary-dark);
+  }
+  
+  .backup-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .backup-btn.loading {
+    background-color: var(--warning);
+  }
+  
+  .spin-animation {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .status-message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  
+  .status-message.success {
+    background-color: rgba(76, 201, 240, 0.1);
+    color: var(--success);
+  }
+  
+  .status-message.failed {
+    background-color: rgba(247, 37, 133, 0.1);
+    color: var(--danger);
+  }
+  
+  .status-message.pending {
+    background-color: rgba(248, 150, 30, 0.1);
+    color: var(--warning);
+  }
+  
+  .backup-history {
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  
+  .history-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.125rem;
+    margin: 0 0 1.5rem 0;
+  }
+  
+  .title-icon {
+    color: var(--primary);
+  }
+  
+  .history-table {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  
+  .table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.875rem;
+    align-items: center;
+  }
+  
+  .table-row:last-child {
+    border-bottom: none;
+  }
+  
+  .table-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .cell-icon {
+    color: var(--gray);
+  }
+  
+  .status-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .status-icon.success {
+    color: var(--success);
+  }
+  
+  .status-icon.failed {
+    color: var(--danger);
+  }
+  
+  .status-icon.pending {
+    color: var(--warning);
+  }
+  
+  .no-history {
+    padding: 2rem;
+    text-align: center;
+    color: var(--gray);
+    font-style: italic;
+  }
+
+  /* Tenant selector styles */
+.tenant-selector {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.tenant-selector label {
+  font-weight: 500;
+}
+
+.tenant-selector select {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--bg-light) !important;
+  color: var(--text)!important;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.tenant-selector select:hover {
+  border-color: var(--primary);
+}
+
+/* No tenant selected message */
+.no-tenant-selected {
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  text-align: center;
+  color: var(--gray);
+}
+
+/* Add some spacing before the backup-header when tenant selector is visible */
+.backup-container > .backup-header {
+  margin-top: 1rem;
+}

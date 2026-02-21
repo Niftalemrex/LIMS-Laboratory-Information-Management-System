@@ -1,0 +1,279 @@
+/* Main container */
+.doctors-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+  }
+  
+  /* Header styles */
+  .dashboard-header {
+    margin-bottom: 2rem;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+  
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .search-container {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .search-input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    max-width: 400px;
+    transition: all 0.2s ease;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .status-filter {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: white;
+  }
+  
+  /* Card styles */
+  .card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #34495e;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Form styles */
+  .add-doctor-section {
+    margin-bottom: 2rem;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .add-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .add-button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+  }
+  
+  /* Table styles */
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  .doctors-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .doctors-table th {
+    background-color: #3498db;
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 500;
+  }
+  
+  .doctors-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+  }
+  
+  .doctors-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .doctors-table tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .doctors-table tr.inactive {
+    opacity: 0.7;
+    background-color: #f9f9f9;
+  }
+  
+  /* Doctor info styles */
+  .doctor-name {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  
+  .join-date {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+  }
+  
+  .specialty-badge {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    background-color: #e8f4f8;
+    color: #2980b9;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  .contact-info a {
+    display: block;
+    color: #3498db;
+    text-decoration: none;
+    margin-bottom: 0.3rem;
+  }
+  
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Status badges */
+  .status-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  
+  .status-badge.active {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-badge.inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  /* Action buttons */
+  .status-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+  
+  .status-button.deactivate {
+    background-color: #f39c12;
+    color: white;
+  }
+  
+  .status-button.deactivate:hover {
+    background-color: #e67e22;
+  }
+  
+  .status-button.activate {
+    background-color: #2ecc71;
+    color: white;
+  }
+  
+  .status-button.activate:hover {
+    background-color: #27ae60;
+  }
+  
+  /* No results */
+  .no-results td {
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .doctors-dashboard {
+      padding: 1rem;
+    }
+    
+    .search-container {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .search-input {
+      max-width: 100%;
+    }
+    
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .doctors-table th, 
+    .doctors-table td {
+      padding: 0.8rem 0.5rem;
+      font-size: 0.9rem;
+    }
+  }

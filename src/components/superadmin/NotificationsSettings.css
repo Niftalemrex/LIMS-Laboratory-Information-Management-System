@@ -1,0 +1,138 @@
+:root {
+    --primary: #4cc9f0;
+    --primary-dark: #3a86ff;
+    --text: #2b2d42;
+    --muted: #6c757d;
+    --card-bg: #ffffff;
+    --radius: 12px;
+  }
+  
+  [data-theme='dark'] {
+    --primary: #4cc9f0;
+    --primary-dark: #3a86ff;
+    --text: #f8f9fa;
+    --muted: #adb5bd;
+    --card-bg: #2b2d42;
+  }
+  
+  .notifications-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+    color: var(--text);
+  }
+  
+  .settings-header {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    color: var(--primary);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  
+  .notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .notification-item {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+  }
+  
+  .notification-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  .notification-icon {
+    font-size: 1.75rem;
+    margin-right: 1.5rem;
+    color: var(--primary);
+  }
+  
+  .notification-details {
+    flex: 1;
+  }
+  
+  .notification-details h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text);
+  }
+  
+  .notification-details p {
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+  }
+  
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: background-color 0.4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: '';
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.4s;
+  }
+  
+  input:checked + .slider {
+    background-color: var(--primary);
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(24px);
+  }
+  
+  .save-btn {
+    margin-top: 2.5rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background 0.25s ease;
+  }
+  
+  .save-btn:hover {
+    background: var(--primary-dark);
+  }
+  

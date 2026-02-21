@@ -1,0 +1,320 @@
+.patient-guides-container {
+    padding: 2rem;
+    background-color: var(--bg-light) !important;
+    height: 100vh!important;
+    width: 100%;
+    color: var(--text);
+    border-radius: 0 !important;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .patient-guides-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  
+  .patient-guides-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: #1a5276;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-top: 0;
+  }
+  
+  .guides-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 2.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  }
+  
+  .clear-search {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #7f8c8d;
+    cursor: pointer;
+    padding: 0.2rem;
+  }
+  
+  .category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .category-filter {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    background-color: white;
+    color: #2c3e50;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+  }
+  
+  .category-filter:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .category-filter.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+  }
+  
+  .guides-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .guides-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #2c3e50;
+  }
+  
+  .results-count {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .clear-filters {
+    background: none;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    padding: 0;
+  }
+  
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .guide-card {
+    background-color: var(--bg-light) !important;
+    color: var(--text);
+    border-radius: 8px;
+     
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+  }
+  
+  .guide-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .guide-card-content {
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .guide-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .guide-category {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #3498db;
+    background-color: #e8f4fd;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+  
+  .guide-file-info {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+  }
+  
+  .guide-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: #2c3e50;
+  }
+  
+  .guide-description {
+    margin: 0 0 1.5rem 0;
+    color: #495057;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+  
+  .guide-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .download-button, .view-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .download-button {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .download-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .view-button {
+    background-color: white;
+    color: #3498db;
+    border: 1px solid #3498db;
+  }
+  
+  .view-button:hover {
+    background-color: #f0f7ff;
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    color: #7f8c8d;
+  }
+  
+  .additional-help {
+    margin-top: 3rem;
+  }
+  
+  .help-card {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .help-card h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  
+  .help-card p {
+    color: #7f8c8d;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+  }
+  
+  .help-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .help-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .help-button.primary {
+    background-color: #3498db;
+    color: white;
+    border: none;
+  }
+  
+  .help-button.primary:hover {
+    background-color: #2980b9;
+  }
+  
+  .help-button.secondary {
+    background-color: white;
+    color: #3498db;
+    border: 1px solid #3498db;
+  }
+  
+  .help-button.secondary:hover {
+    background-color: #f0f7ff;
+  }
+  
+  @media (max-width: 768px) {
+    .patient-guides-container {
+      padding: 1.5rem 1rem;
+    }
+    
+    .guides-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .help-actions {
+      flex-direction: column;
+    }
+    
+    .help-button {
+      width: 100%;
+    }
+  }

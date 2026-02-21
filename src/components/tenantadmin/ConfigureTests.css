@@ -1,0 +1,41 @@
+/* ConfigureTests.css */
+body, html {
+  background: var(--bg-light);
+  color: var(--text);
+ 
+}
+.configure-tests {
+  padding: 2rem;
+  background-color: var(--bg-light) !important;
+  min-height: 100vh;
+  width: 100%;
+  color: var(--text);
+
+  font-family: 'Inter', sans-serif;
+  }
+  
+  .configure-tests h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #111827;
+  }
+  
+  .configure-tests .subtitle {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 24px;
+  }
+  
+  .add-test-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .add-test-form input,
+  .add-test-form textarea {
+    flex: 1 1 240px;
+    padding
+  

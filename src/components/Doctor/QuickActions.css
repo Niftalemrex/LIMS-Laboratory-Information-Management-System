@@ -1,0 +1,143 @@
+/* QuickActions.css */
+.quick-actions-container {
+  padding: 2rem;
+  background-color: var(--bg-light) !important;
+  min-height: 100vh;
+  width: 100%;
+  color: var(--text)!important;
+  border-radius: 0 !important;
+  font-family: 'Inter', sans-serif;
+}
+
+.qa-header {
+  color: var(--text)!important;
+  background-color: var(--bg-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.qa-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text)!important;
+  margin: 0 0 0.5rem 0;
+}
+
+.qa-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.qa-grid {
+  color: var(--text)!important;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.qa-card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  color: var(--text)!important;
+  background-color: var(--bg-light);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.qa-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #d1d5db;
+}
+
+.qa-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--card-color);
+}
+
+.qa-icon-container {
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.qa-icon {
+  display: flex;
+}
+
+.qa-content {
+  flex: 1;
+  text-align: left;
+}
+
+.qa-label {
+  color: var(--text)!important;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+}
+
+.qa-description {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.qa-arrow {
+  color: #9ca3af;
+  transition: transform 0.2s ease;
+}
+
+.qa-card:hover .qa-arrow {
+  transform: translateX(3px);
+  color: var(--card-color);
+}
+
+.arrow-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .quick-actions-container {
+    padding: 1.5rem;
+  }
+  
+  .qa-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .qa-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .qa-card {
+    padding: 1.25rem;
+  }
+}

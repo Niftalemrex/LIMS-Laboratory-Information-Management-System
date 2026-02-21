@@ -1,0 +1,197 @@
+/* DoctorDashboard.css */
+:root {
+  --sidebar-width: 260px;
+  --content-bg: #f8fafc;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --card-bg: #ffffff;
+  --primary-color: #10b981;
+  --error-color: #ef4444;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --radius-md: 8px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark theme variables */
+[data-theme="dark"] {
+  --content-bg: #0f172a;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border-color: #1e293b;
+  --card-bg: #1e293b;
+}
+
+/* Dashboard container */
+.doctor-dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--content-bg);
+  position: relative;
+}
+
+/* Main content area */
+.doctor-main-content {
+  margin-left: 100px;
+  
+  margin-left: var(--sidebar-width);
+  background: var(--bg-light)!important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1; /* Allow to stretch within parent */
+  overflow-y: none;
+  scrollbar-gutter: stable;
+  height: 100%;
+}
+
+/* Overlay effect when sidebar is open */
+.doctor-main-content.overlayed {
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+/* Optional wrapper inside content */
+.content-wrapper {
+  max-width: 2300px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Section not found styling */
+.section-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  text-align: center;
+}
+
+.section-not-found h2 {
+  font-size: 2rem;
+  color: var(--error-color);
+  margin-bottom: 1rem;
+}
+
+.section-not-found p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* Card styling (used in sections) */
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+/* Table styling */
+.table-container {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background-color: var(--content-bg);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Mobile Hamburger button */
+.mobile-hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 2500;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--radius-md);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .doctor-main-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .doctor-sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 2000;
+  }
+
+  .doctor-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-hamburger-btn {
+    display: block;
+  }
+
+  .doctor-main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+}
+
+/* Scrollbar styling (optional) */
+.doctor-main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.doctor-main-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}

@@ -1,0 +1,474 @@
+:root {
+  --primary: #4361ee;
+  --primary-light: #4895ef;
+  --primary-dark: #3a0ca3;
+  --secondary: #f72585;
+  --light: #ffffff;
+  --dark: #212529;
+  --gray: #6c757d;
+  --light-gray: #e9ecef;
+  --lighter-gray: #f8f9fa;
+  --success: #4cc9f0;
+  --error: #f72585;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+.default {
+  --bg-light: #1f2937 !important;            /* pale lemon */
+  --text: #ffffff!important;               /* charcoal */
+  --card-bg: #1f2937;
+  --border: #e0c097;
+  --primary: #f4a261;            /* orange tint */
+  --primary-dark: #e76f51;
+  --muted: #a89f91;
+  --radius: 12px;
+}
+
+/* === Explicit Light Theme - Citrus Mist === */
+.light {
+  --bg-light: #ffffff;            /* pale lemon */
+  --text: #333333;               /* charcoal */
+  --card-bg: #ffffff;
+  --border: #e0c097;
+  --primary: #f4a261;            /* orange tint */
+  --primary-dark: #e76f51;
+  --muted: #a89f91;
+  --radius: 12px;
+}
+
+/* === Explicit Dark Theme - Midnight Olive === */
+.dark {
+  --bg-light: #000000;           /* very dark green */
+  --text: #ffffff!important;    
+  --card-bg: #1f2f2f;
+  --border: #3c4c4c;
+  --primary: #81b29a;            /* soft olive green */
+  --primary-dark: #52796f;
+  --muted: #9db1a9;
+  --radius: 12px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--dark);
+}
+
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Description Side (50% width) */
+.auth-description {
+  flex: 1;
+  background-color: #16213e;
+  color: white;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.description-content {
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.logo-container {
+  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.lims-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.lims-logo svg {
+  flex-shrink: 0;
+}
+
+.app-subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.feature-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  margin-top: 0.25rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-light);
+  flex-shrink: 0;
+}
+
+.feature-text h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.feature-text p {
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.app-downloads {
+  margin-top: 3rem;
+}
+
+.app-downloads h3 {
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.download-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.download-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.9rem;
+}
+
+.download-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.download-btn svg {
+  margin-right: 0.25rem;
+}
+
+.support-container {
+
+}
+
+.support-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4361ee;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 48px;
+  height: 48px;
+}
+
+.support-button:hover {
+  background-color: #364fc7;
+}
+
+.support-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.support-button.active {
+  background-color: #364fc7;
+}
+
+/* Login Form Side (50% width - White Card) */
+.auth-form-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  background: var(--bg-light);
+}
+
+.auth-form-container {
+  width: 100%;
+  max-width: 50vw;
+  height: 100vh;
+  display: flex;
+  color: var(--text);
+  background: var(--bg-light);
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 40vw;
+  color: var(--text);
+  background: var(--bg-light);
+  padding: 2.5rem;
+  border-radius: 0;
+}
+
+.form-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.form-header h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--dark);
+}
+
+.form-header p {
+  color: var(--gray);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark);
+  font-size: 0.95rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.forgot-password {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: var(--error);
+  background-color: rgba(247, 37, 133, 0.1);
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.signin-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 1.5rem;
+}
+
+.signin-button:hover {
+  background-color: var(--primary-dark);
+}
+
+.demo-accounts-toggle {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.demo-accounts-toggle button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.demo-accounts {
+  margin-bottom: 1.5rem;
+}
+
+.demo-accounts h4 {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--gray);
+  text-align: center;
+}
+
+.accounts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.account-card {
+  background-color: var(--light-gray);
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+}
+
+.account-role {
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-bottom: 0.25rem;
+}
+
+.account-email {
+  color: var(--gray);
+  margin-bottom: 0.25rem;
+  word-break: break-all;
+}
+
+.account-password {
+  font-family: monospace;
+  color: var(--primary);
+}
+
+.language-selector {
+  text-align: center;
+}
+
+.language-selector select {
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--light-gray);
+  font-size: 0.875rem;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .auth-form-container {
+    max-width: 100%;
+    padding: 2rem;
+  }
+  
+  .auth-form {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+  }
+
+  .chat-popup {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+  }
+  
+  .auth-description {
+    padding: 2rem 1.5rem;
+  }
+  
+  .auth-form-wrapper {
+    padding: 2rem 1.5rem;
+  }
+  
+  .accounts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-form-container {
+    height: auto;
+    max-width: 100%;
+  }
+
+  .chat-popup {
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form {
+    padding: 1.5rem;
+  }
+  
+  .download-buttons {
+    flex-direction: column;
+  }
+
+  .feature-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .feature-icon {
+    margin-top: 0;
+  }
+}

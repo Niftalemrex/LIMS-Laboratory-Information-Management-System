@@ -1,0 +1,228 @@
+/* Reset */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Container flex for sidebar + main */
+.support-dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-light);
+}
+
+/* Sidebar fixed left */
+.support-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+/* Sidebar RTL support */
+.support-sidebar.rtl {
+  direction: rtl;
+}
+
+/* Sidebar header */
+.sidebar-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: 1.2px;
+}
+
+/* Sidebar nav list */
+.support-sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.support-sidebar nav ul li {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  gap: 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 10px;
+  color: #e0e7ff;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+.support-sidebar nav ul li:hover,
+.support-sidebar nav ul li:focus {
+  background-color: #3b82f6;
+  outline: none;
+}
+
+.support-sidebar li.active {
+  background-color: #3b82f6;
+  font-weight: 600;
+  color: white;
+}
+
+/* Main content pushed right */
+.support-main-content {
+  margin-left: var(--sidebar-width);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+/* Header */
+.support-header h1 {
+  margin-bottom: 1.5rem;
+  color: #1e3a8a;
+}
+
+/* Section styles */
+.inventory-overview, .activity-logs {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  color: #374151;
+}
+
+table th,
+table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: middle;
+}
+
+table th {
+  background-color: #f3f4f6;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+/* Buttons */
+button {
+  padding: 6px 14px;
+  margin-right: 6px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+button:hover,
+button:focus {
+  background-color: #1d4ed8;
+  outline: none;
+}
+
+/* Different button styles */
+.btn-reorder {
+  background-color: #f59e0b; /* amber */
+}
+.btn-reorder:hover,
+.btn-reorder:focus {
+  background-color: #d97706;
+}
+.btn-received {
+  background-color: #10b981; /* emerald */
+}
+.btn-received:hover,
+.btn-received:focus {
+  background-color: #047857;
+}
+
+/* Status row colors */
+.status-in-stock {
+  color: #059669; /* green */
+}
+.status-low-stock {
+  color: #d97706; /* orange */
+  font-weight: 600;
+}
+.status-expired {
+  color: #dc2626; /* red */
+  font-weight: 700;
+}
+
+/* Activity logs list */
+.activity-logs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.activity-logs li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+.activity-logs li strong {
+  color: #1e3a8a;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  /* Sidebar slides out of view */
+  .support-sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--sidebar-width);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  }
+
+  .support-sidebar.open {
+    transform: translateX(0);
+    z-index: 1000;
+  }
+
+  /* Add overlay */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 900;
+  }
+  .overlay.active {
+    display: block;
+  }
+
+  /* Push main content full width */
+  .support-main-content {
+    margin-left: 0;
+  }
+}

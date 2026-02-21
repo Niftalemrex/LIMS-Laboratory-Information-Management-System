@@ -1,0 +1,103 @@
+.dashboard-container {
+  padding: 2rem;
+  background-color: var(--bg-light) !important;
+  min-height: 100vh;
+  width: 100%;
+  color: var(--text);
+  border-radius: 0 !important;
+  font-family: 'Inter', sans-serif;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.2rem;
+    color: #2c3e50;
+  }
+  
+  .dashboard-subtitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .dashboard-sections {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .card {
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    flex: 1 1 45%;
+    min-width: 300px;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #34495e;
+    border-bottom: 2px solid #2980b9;
+    padding-bottom: 0.3rem;
+  }
+  
+  .results-list,
+  .appointments-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .result-item,
+  .appointment-item {
+    padding: 1rem;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .result-item:last-child,
+  .appointment-item:last-child {
+    border-bottom: none;
+  }
+  
+  .result-test {
+    flex: 2;
+    font-weight: 600;
+  }
+  
+  .result-date {
+    flex: 1;
+    color: #999;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  
+  .result-status {
+    flex: 1;
+    font-weight: 700;
+    text-align: right;
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+    color: white;
+  }
+  
+  .result-item.pending .result-status {
+    background-color: #e67e22; /* orange */
+  }
+  
+  .result-item.completed .result-status {
+    background-color: #27ae60; /* green */
+  }
+  
+  .appointment-item p {
+    margin: 0.15rem 0;
+    flex-basis: 100%;
+    font-size: 1rem;
+  }
+  

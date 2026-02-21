@@ -1,0 +1,338 @@
+/* ================================
+   Theme Variables
+================================ */
+:root.default {
+  --bg-light: #ffffff;
+  --text: #333333;
+  --card-bg: #ffffff;
+  --border: #e0c097;
+  --primary: #f4a261;
+  --primary-dark: #e76f51;
+  --primary-hover: #e76f51;
+  --muted: #a89f91;
+  --radius: 12px;
+
+  --sidebar-width: 240px;
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #333333;
+  --sidebar-active: rgba(244, 162, 97, 0.15);
+  --sidebar-hover: rgba(244, 162, 97, 0.1);
+
+  --content-bg: #f8fafc;
+  --text-primary: #333333;
+  --border-color: #e0c097;
+
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+:root.light {
+  --bg-light: #ffffff;
+  --text: #333333;
+  --card-bg: #ffffff;
+  --border: #e0c097;
+  --primary: #f4a261;
+  --primary-dark: #e76f51;
+  --primary-hover: #e76f51;
+  --muted: #a89f91;
+  --radius: 12px;
+
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #333333;
+  --sidebar-active: rgba(244, 162, 97, 0.15);
+  --sidebar-hover: rgba(244, 162, 97, 0.1);
+
+  --content-bg: #f8fafc;
+  --text-primary: #333333;
+  --border-color: #e0c097;
+
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+:root.dark {
+  --bg-light: #000000;
+  --text: #eeeeee;
+  --card-bg: #000000;
+  --border: #3c4c4c;
+  --primary: #81b29a;
+  --primary-dark: #52796f;
+  --primary-hover: #52796f;
+  --muted: #9db1a9;
+  --radius: 12px;
+
+  --sidebar-bg: #121c1c;
+  --sidebar-text: #eeeeee;
+  --sidebar-active: rgba(129, 178, 154, 0.15);
+  --sidebar-hover: rgba(129, 178, 154, 0.1);
+
+  --content-bg: #101717;
+  --text-primary: #eeeeee;
+  --border-color: #3c4c4c;
+
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.6);
+  --transition: all 0.3s ease;
+}
+
+/* ================================
+   Layout
+================================ */
+.tenant-dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-light);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar */
+.tenantadmin-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+  transition: var(--transition);
+}
+
+.tenantadmin-sidebar nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.25rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--sidebar-text);
+  font-size: 0.95rem;
+}
+
+.nav-item:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.nav-item.active {
+  background-color: var(--sidebar-active);
+  font-weight: 600;
+}
+
+/* Mobile Hamburger */
+.mobile-hamburger-btn {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1200;
+  font-size: 1.5rem;
+  background: var(--primary);
+  border: none;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.mobile-hamburger-btn:hover {
+  background: var(--primary-hover);
+}
+
+/* Overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 900;
+  display: none;
+}
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* ================================
+   Main Content
+================================ */
+.tenant-main-content {
+  margin-left: 100px;
+  
+  margin-left: var(--sidebar-width);
+  background: var(--bg-light)!important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1; /* Allow to stretch within parent */
+  overflow-y: none;
+  scrollbar-gutter: stable;
+  height: 100%;
+}
+
+.tenant-main-content.overlayed {
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.content-wrapper {
+  padding: 1.5rem;
+  width: 100%;
+}
+
+/* ================================
+   Section Cards
+================================ */
+.section-card {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+}
+
+.section-card h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+/* ================================
+   Buttons
+================================ */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--content-bg);
+}
+
+/* ================================
+   Forms
+================================ */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  transition: var(--transition);
+  background: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.25);
+}
+
+/* ================================
+   Tables
+================================ */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+  font-weight: 600;
+  color: var(--text-primary);
+  background-color: var(--content-bg);
+}
+
+/* ================================
+   Responsive
+================================ */
+@media (max-width: 1024px) {
+  .tenantadmin-sidebar {
+    width: 200px;
+  }
+  .tenant-main-content {
+    margin-left: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tenantadmin-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    max-width: 280px;
+    height: 100%;
+    z-index: 2000;
+    transition: var(--transition);
+  }
+
+  .tenantadmin-sidebar.active {
+    left: 0;
+  }
+
+  .mobile-hamburger-btn {
+    display: block;
+  }
+
+  .tenant-main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tenantadmin-sidebar {
+    width: 100%;
+    max-width: none;
+  }
+}

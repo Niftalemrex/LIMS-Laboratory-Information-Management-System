@@ -1,0 +1,673 @@
+/* BillingPlans.css */
+
+:root {
+  --primary: #3b82f6;
+  --primary-light: #eff6ff;
+  --primary-dark: #1e40af;
+  --secondary: #10b981;
+  --secondary-light: #d1fae5;
+  --danger: #ef4444;
+  --danger-light: #fee2e2;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --gray-light: #f3f4f6;
+  --gray-medium: #e5e7eb;
+  --gray-dark: #6b7280;
+  --border-radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.2s ease;
+}
+.default {
+  --bg-light: #ffffff;            /* pale lemon */
+  --text: #333333;               /* charcoal */
+  --card-bg: #ffffff;
+  --border: #e0c097;
+  --primary: #f4a261;            /* orange tint */
+  --primary-dark: #e76f51;
+  --muted: #a89f91;
+  --radius: 12px;
+}
+
+/* === Explicit Light Theme - Citrus Mist === */
+.light {
+  --bg-light: #ffffff;            /* pale lemon */
+  --text: #333333;               /* charcoal */
+  --card-bg: #ffffff;
+  --border: #e0c097;
+  --primary: #f4a261;            /* orange tint */
+  --primary-dark: #e76f51;
+  --muted: #a89f91;
+  --radius: 12px;
+}
+
+/* === Explicit Dark Theme - Midnight Olive === */
+.dark {
+  --bg-light: #000000;           /* very dark green */
+  --text: #eeeeee;
+  --card-bg: #1f2f2f;
+  --border: #3c4c4c;
+  --primary: #81b29a;            /* soft olive green */
+  --primary-dark: #52796f;
+  --muted: #9db1a9;
+  --radius: 12px;
+}
+
+/* Container */
+.billing-container {
+  background-color: var(--bg-light) !important;
+  padding: 2rem;
+  height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: var(--text)!important;
+}
+
+/* Header */
+.billing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.billing-header h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text)!important;
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--gray-dark);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.download-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-light) !important;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.download-button:hover {
+  background-color: var(--primary-light);
+}
+
+.download-button .icon {
+  font-size: 1rem;
+}
+
+/* Tabs */
+.billing-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--gray-medium);
+  margin-bottom: 2rem;
+}
+
+.tab {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text)!important;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tab:hover {
+  color: #111827;
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+/* Plans Section */
+.plans-grid {
+  display: grid;
+  color: var(--text)!important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.plan-card {
+  background-color: var(--bg-light) !important;
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  color: var(--text)!important;
+  position: relative;
+  transition: var(--transition);
+}
+
+.plan-card:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.plan-card.current {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.plan-card.recommended {
+  border-color: var(--primary);
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -10px;
+  right: 1rem;
+  background-color: var(--primary);
+  background-color: var(--bg-light) !important;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.plan-header {
+  margin-bottom: 1.5rem;
+}
+
+.plan-header h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem;
+  color: var(--text)!important;
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.plan-price .amount {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.plan-price .billing-cycle {
+  font-size: 0.875rem;
+  color: var(--gray-dark);
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.feature-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.feature-text {
+  font-size: 0.875rem;
+}
+
+.tooltip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--bg-light) !important;
+  background-color: var(--bg-light) !important;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+.plan-features li:hover .tooltip {
+  opacity: 1;
+}
+
+.plan-button {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.plan-button.primary {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+}
+
+.plan-button.primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.plan-button.secondary {
+  background-color: var(--gray-light);
+  color: #374151;
+  border: none;
+  cursor: default;
+}
+
+.plan-button.outline {
+  background-color: white;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.plan-button.outline:hover {
+  background-color: var(--primary-light);
+}
+
+.button-icon {
+  font-size: 1rem;
+}
+
+/* Plan Comparison */
+.plan-comparison {
+  margin-top: 2rem;
+  background-color: var(--bg-light) !important;
+}
+
+.plan-comparison h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text)!important;
+}
+
+.comparison-table {
+  background-color: var(--bg-light) !important;
+  width: 100%;
+  color: var(--text)!important;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-medium);
+}
+
+.comparison-table th {
+  font-weight: 600;
+  background-color: var(--bg-light) !important;
+  background-color: var(--bg-light) !important;
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* History Section */
+.history-section {
+  padding: 0 0.5rem;
+}
+
+.history-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.filter-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.history-table th,
+.history-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-medium);
+}
+
+.history-table th {
+  font-weight: 600;
+  color: #111827;
+  background-color: var(--gray-light);
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-badge.paid {
+  background-color: var(--secondary-light);
+  color: var(--secondary);
+}
+
+.status-badge.pending {
+  background-color: var(--warning-light);
+  color: var(--warning);
+}
+
+.status-badge.failed {
+  background-color: var(--danger-light);
+  color: var(--danger);
+}
+
+.download-invoice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.download-invoice .icon {
+  font-size: 1rem;
+}
+
+/* Payment Section */
+.payment-section {
+  padding: 0 0.5rem;
+}
+
+.payment-methods {
+  margin-bottom: 2rem;
+}
+
+.payment-methods h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.payment-card {
+  background-color: var(--bg-light) !important;
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  position: relative;
+  transition: var(--transition);
+}
+
+.payment-card:hover {
+  border-color: var(--primary);
+}
+
+.card-brand {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.card-number {
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: var(--gray-dark);
+  margin-bottom: 0.25rem;
+}
+
+.card-expiry {
+  font-size: 0.75rem;
+  color: var(--gray-dark);
+}
+
+.default-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--secondary-light);
+  color: var(--secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+}
+
+.card-action {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.add-card-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-light) !important;
+  color: var(--primary);
+  border: 1px dashed var(--primary);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.add-card-button:hover {
+  background-color: var(--primary-light);
+}
+
+.add-card-button .icon {
+  font-size: 1rem;
+}
+
+/* Payment Form */
+.payment-form {
+  background-color: var(--bg-light) !important;
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.payment-form h4 {
+  font-size: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  margin-bottom: 1rem;
+}
+
+.form-row label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-row input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--border-radius);
+  font-size: 0.875rem;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.form-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.primary-button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.primary-button:hover {
+  background-color: var(--primary-dark);
+}
+
+.secondary-button {
+  background-color: white;
+  color: #374151;
+  border: 1px solid var(--gray-medium);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.secondary-button:hover {
+  background-color: var(--gray-light);
+}
+
+/* Payment Providers */
+.payment-providers {
+  margin-top: 2rem;
+}
+
+.payment-providers h4 {
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.providers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.provider-logo {
+  background-color: white;
+  border: 1px solid var(--gray-medium);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.provider-logo img {
+  max-height: 24px;
+  max-width: 100%;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: var(--transition);
+}
+
+.provider-logo:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .billing-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .header-actions {
+    width: 100%;
+  }
+  
+  .billing-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 0.5rem;
+  }
+  
+  .form-columns {
+    grid-template-columns: 1fr;
+  }
+  
+  .history-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

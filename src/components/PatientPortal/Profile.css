@@ -1,0 +1,125 @@
+.profile-container {
+  padding: 2rem;
+  background-color: var(--bg-light) !important;
+  min-height: 100vh;
+  width: 100%;
+  color: var(--text);
+  border-radius: 0 !important;
+  font-family: 'Inter', sans-serif;
+  }
+  
+  .profile-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile-subtitle {
+    font-size: 1.1rem;
+    color: #667788;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .profile-form label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    user-select: none;
+  }
+  
+  .profile-form input,
+  .profile-form select {
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1.8px solid #ccc;
+    transition: border-color 0.2s ease;
+    font-family: inherit;
+    outline-offset: 2px;
+  }
+  
+  .profile-form input:disabled,
+  .profile-form select:disabled {
+    background-color: #f5f7fa;
+    color: #999;
+    cursor: not-allowed;
+  }
+  
+  .profile-form input:focus:not(:disabled),
+  .profile-form select:focus:not(:disabled) {
+    border-color: #2980b9;
+    box-shadow: 0 0 7px #2980b9aa;
+    outline: none;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: -0.7rem;
+    margin-left: 0.2rem;
+    user-select: none;
+  }
+  
+  .profile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .btn {
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 14px;
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    user-select: none;
+    transition: background-color 0.25s ease;
+    min-width: 110px;
+  }
+  
+  .btn-edit {
+    background-color: #2980b9;
+    color: white;
+  }
+  
+  .btn-edit:hover,
+  .btn-edit:focus-visible {
+    background-color: #1f5d8a;
+    outline: none;
+    box-shadow: 0 0 8px #1f5d8aaa;
+  }
+  
+  .btn-save {
+    background-color: #27ae60;
+    color: white;
+  }
+  
+  .btn-save:hover,
+  .btn-save:focus-visible {
+    background-color: #1e8748;
+    outline: none;
+    box-shadow: 0 0 8px #1e87488a;
+  }
+  
+  .btn-cancel {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .btn-cancel:hover,
+  .btn-cancel:focus-visible {
+    background-color: #b12b23;
+    outline: none;
+    box-shadow: 0 0 8px #b12b2388;
+  }
+  

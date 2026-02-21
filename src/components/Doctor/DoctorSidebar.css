@@ -1,0 +1,336 @@
+/* DoctorSidebar.css */
+
+/* ===== Theme Variables ===== */
+:root.default {
+  --sidebar-bg: #1f2937;
+  --sidebar-text: #ffffff;
+  --sidebar-active: #3b82f6;
+  --sidebar-hover: rgba(59, 130, 246, 0.1);
+  --doctor-color: #10b981;
+  --logout-color: #ef4444;
+  --sidebar-width: 260px;
+  --transition: all 0.3s ease;
+  --border-radius: 8px;
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Light theme overrides */
+:root.light {
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #1f2937;
+  --sidebar-active: #10b981;
+  --sidebar-hover: rgba(16, 185, 129, 0.1);
+  --doctor-color: #10b981;
+}
+
+/* Dark theme overrides */
+:root.dark {
+  --sidebar-bg: #121212;
+  --sidebar-text: #e5e7eb;
+  --sidebar-active: #10b981;
+  --sidebar-hover: rgba(16, 185, 129, 0.15);
+  --doctor-color: #10b981;
+}
+
+/*--------------------
+  Sidebar Container
+--------------------*/
+.doctor-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+/* Header Section */
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profile-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(16, 185, 129, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+}
+
+.doctor-icon {
+  font-size: 1.6rem;
+  color: var(--doctor-color);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.profile-role {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/*--------------------
+  Navigation
+--------------------*/
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0.75rem;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  margin: 0.25rem 0;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.nav-item:hover,
+.nav-item:focus-visible {
+  background-color: var(--sidebar-hover);
+  outline: none;
+}
+
+.nav-item.active {
+  background-color: var(--sidebar-active);
+  color: #fff;
+  font-weight: 600;
+}
+
+.nav-icon {
+  margin-right: 14px;
+  font-size: 1.3rem;
+}
+
+.nav-label {
+  flex: 1;
+}
+
+/*--------------------
+  Settings Section
+--------------------*/
+.settings-section {
+  margin: 1rem 1rem 0 1rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-toggle {
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings-toggle:hover,
+.settings-toggle:focus-visible {
+  background-color: var(--sidebar-hover);
+  outline: none;
+}
+
+.settings-icon {
+  margin-right: 14px;
+  font-size: 1.3rem;
+}
+
+.settings-label {
+  font-size: 1rem;
+  flex: 1;
+}
+
+.dropdown-icon {
+  transition: var(--transition);
+}
+
+.dropdown-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.settings-submenu {
+  list-style: none;
+  padding-left: 2.5rem;
+  margin: 0;
+}
+
+.submenu-item {
+  padding: 0.7rem 1rem;
+  margin: 0.25rem 0;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.submenu-item:hover,
+.submenu-item:focus-visible {
+  background-color: var(--sidebar-hover);
+  outline: none;
+}
+
+.submenu-item.active {
+  font-weight: 600;
+}
+
+.arrow-icon {
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+/*--------------------
+  User Menu Section
+--------------------*/
+.user-menu-section {
+  margin: 1.25rem;
+  position: relative;
+}
+
+.user-menu-toggle {
+  display: flex;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.user-menu-toggle:hover,
+.user-menu-toggle:focus-visible {
+  background-color: var(--sidebar-hover);
+  outline: none;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  margin-right: 14px;
+  color: white;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.user-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.user-email {
+  font-size: 0.75rem;
+  opacity: 0.65;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--sidebar-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.5rem;
+  z-index: 20;
+}
+
+.logout-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: none;
+  border: none;
+  color: var(--logout-color);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: calc(var(--border-radius) - 2px);
+  transition: var(--transition);
+}
+
+.logout-button:hover,
+.logout-button:focus-visible {
+  background-color: rgba(239, 68, 68, 0.15);
+  outline: none;
+}
+
+.logout-icon {
+  margin-right: 14px;
+  font-size: 1.3rem;
+}
+
+/*--------------------
+  Mobile / Responsive
+--------------------*/
+@media (max-width: 1024px) {
+  .doctor-sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .doctor-sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* RTL support */
+.doctor-sidebar.rtl {
+  direction: rtl;
+}

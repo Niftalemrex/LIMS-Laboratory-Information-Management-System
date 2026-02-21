@@ -1,0 +1,353 @@
+/* Main container */
+.home-visit-schedule {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text)!important;
+    background-color: var(--bg-light) !important;
+    height: 100%;
+  }
+  
+  /* Header styles */
+  .schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .schedule-header h1 {
+    font-size: 2rem;
+    margin: 0;
+    color: var(--text)!important;
+    background-color: var(--bg-light) !important;
+    font-weight: 600;
+  }
+  
+  .view-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .view-controls button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .view-controls button:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .view-controls button.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+  }
+  
+  /* Calendar container */
+  .calendar-container {
+    color: var(--text)!important;
+    background-color: var(--bg-light) !important;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    height: calc(100% - 60px);
+  }
+  
+  /* Calendar event styles */
+  .calendar-event {
+    padding: 0.3rem;
+    height: 100%;
+    overflow: hidden;
+    color: var(--text)!important;
+    background-color: var(--bg-light) !important;
+  }
+  
+  .event-time {
+    font-size: 0.75rem;
+    color: var(--text)!important;
+    background-color: var(--bg-light) !important;
+    margin-bottom: 0.2rem;
+  }
+  
+  .event-patient {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .event-type {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    display: inline-block;
+  }
+  
+  /* Modal styles */
+  .visit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    color: var(--text)!important;
+    background-color: var(--bg-light) !important;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .modal-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #2c3e50;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #7f8c8d;
+  }
+  
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  .detail-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .detail-section h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-size: 1.2rem;
+  }
+  
+  .detail-row {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  
+  .detail-label {
+    font-weight: 600;
+    width: 150px;
+    color: #2c3e50;
+  }
+  
+  .detail-value {
+    flex: 1;
+  }
+  
+  /* Visit type badges */
+  .visit-type {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  .visit-type.routine {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .visit-type.follow-up {
+    background-color: #e3f2fd;
+    color: #1565c0;
+  }
+  
+  .visit-type.urgent {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+  
+  /* Status badges */
+  .status-badge {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  
+  .status-badge.scheduled {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .status-badge.in-progress {
+    background-color: #cce5ff;
+    color: #004085;
+  }
+  
+  .status-badge.completed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-badge.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  /* Needs list */
+  .needs-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .needs-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .notes-content {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    white-space: pre-wrap;
+  }
+  
+  /* Modal footer buttons */
+  .modal-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  .progress-button, .cancel-button, .complete-button, .close-modal-button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .progress-button {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  .progress-button:hover {
+    background-color: #138496;
+  }
+  
+  .cancel-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .cancel-button:hover {
+    background-color: #c82333;
+  }
+  
+  .complete-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .complete-button:hover {
+    background-color: #218838;
+  }
+  
+  .close-modal-button {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .close-modal-button:hover {
+    background-color: #5a6268;
+  }
+  
+  /* Loading indicator */
+  .loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1.5rem;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .home-visit-schedule {
+      padding: 1rem;
+    }
+    
+    .schedule-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .view-controls {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+    
+    .detail-row {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    
+    .detail-label {
+      width: 100%;
+    }
+    
+    .modal-footer {
+      flex-direction: column;
+    }
+    
+    .modal-footer button {
+      width: 100%;
+    }
+  }

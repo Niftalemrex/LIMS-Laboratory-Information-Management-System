@@ -1,0 +1,333 @@
+/* =========================
+   Root Variables
+========================= */
+:root {
+  --sidebar-width: 280px;
+  --sidebar-bg: #1f2937;
+  --sidebar-text: #e5e7eb;
+  --sidebar-active: #3b82f6;
+  --sidebar-hover: rgba(59, 130, 246, 0.1);
+  --help-color: #84cc16; /* Lime green for help items */
+  --logout-color: #ef4444;
+  --patient-accent: #3b82f6; /* Blue accent color for patient */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --border-radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================
+   Sidebar Container
+========================= */
+.patient-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
+  overflow-y: auto;
+  transition: var(--transition);
+}
+
+/* Header */
+.sidebar-header {
+  padding: 1.5rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-subtitle {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin: 0.25rem 0 0;
+  font-weight: 400;
+  color: var(--patient-accent);
+}
+
+/* Navigation Menu */
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0.75rem;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin: 0.25rem 0;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+  color: var(--sidebar-text);
+}
+
+.nav-item:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.nav-item.active {
+  background-color: var(--patient-accent);
+  color: white;
+  font-weight: 500;
+}
+
+.nav-icon {
+  margin-right: 12px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav-label {
+  font-size: 0.95rem;
+}
+
+/* Help Section */
+.help-section {
+  margin: 0.5rem 0.75rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.help-toggle {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.help-toggle:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.help-toggle.expanded {
+  margin-bottom: 0.5rem;
+}
+
+.help-icon {
+  margin-right: 12px;
+  font-size: 1.2rem;
+  color: var(--help-color);
+}
+
+.help-label {
+  font-size: 0.95rem;
+  color: var(--help-color);
+  flex: 1;
+}
+
+.help-toggle:hover .help-label,
+.help-toggle:hover .help-icon {
+  color: var(--sidebar-text);
+}
+
+.dropdown-icon {
+  transition: var(--transition);
+  color: var(--help-color);
+}
+
+.dropdown-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.help-submenu {
+  list-style: none;
+  padding: 0 0 0 2.5rem;
+  margin: 0;
+}
+
+.submenu-item {
+  padding: 0.65rem 1rem;
+  margin: 0.25rem 0;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+  color: var(--help-color);
+}
+
+.submenu-item:hover {
+  color: var(--sidebar-text);
+  background-color: var(--sidebar-hover);
+}
+
+.submenu-item.active {
+  color: var(--sidebar-text);
+  font-weight: 500;
+}
+
+/* User Menu Section */
+.user-menu-section {
+  margin: 0.75rem;
+  position: relative;
+}
+
+.user-menu-toggle {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.user-menu-toggle:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 1rem;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--sidebar-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  z-index: 10;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-radius: calc(var(--border-radius) - 2px);
+  transition: var(--transition);
+  color: var(--sidebar-text);
+}
+
+.dropdown-item:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.dropdown-item .dropdown-icon {
+  margin-right: 12px;
+  font-size: 1.1rem;
+  color: var(--sidebar-text);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 0.5rem 0;
+}
+
+.logout-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--logout-color);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: calc(var(--border-radius) - 2px);
+  transition: var(--transition);
+}
+
+.logout-button:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.logout-icon {
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .patient-sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    left: -100%;
+    top: 0;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .patient-sidebar.open {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-header,
+  .nav-item,
+  .help-toggle,
+  .submenu-item,
+  .user-menu-toggle,
+  .dropdown-item {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+}

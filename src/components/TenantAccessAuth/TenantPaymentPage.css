@@ -1,0 +1,356 @@
+/* TenantPaymentPage.css */
+.payment-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .payment-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+  }
+  
+  .payment-header {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    color: white;
+    padding: 25px;
+    text-align: center;
+  }
+  
+  .payment-header h1 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .payment-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 14px;
+  }
+  
+  .payment-info {
+    padding: 25px;
+  }
+  
+  .tenant-info {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .tenant-info h2 {
+    margin: 0 0 5px 0;
+    color: #333;
+    font-size: 20px;
+  }
+  
+  .tenant-info p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+  }
+  
+  .section-label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #444;
+    font-size: 14px;
+  }
+  
+  .currency-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 25px;
+  }
+  
+  .currency-option {
+    padding: 8px 12px;
+    background: #f5f7fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  
+  .currency-option:hover {
+    background: #e8eef7;
+  }
+  
+  .currency-option.active {
+    background: #4b6cb7;
+    color: white;
+    border-color: #4b6cb7;
+  }
+  
+  .amount-display {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f9fafc;
+    border-radius: 12px;
+  }
+  
+  .amount-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  
+  .amount-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 5px;
+  }
+  
+  .original-amount {
+    font-size: 14px;
+    color: #718096;
+  }
+  
+  .payment-methods-section {
+    margin-bottom: 25px;
+  }
+  
+  .payment-methods {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .method-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .method-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: var(--method-color);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .method-card:hover {
+    border-color: #a0aec0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .method-card:hover::before {
+    opacity: 1;
+  }
+  
+  .method-card.selected {
+    border-color: var(--method-color);
+    background: #f8faff;
+  }
+  
+  .method-card.selected::before {
+    opacity: 1;
+  }
+  
+  .method-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  
+  .method-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+  }
+  
+  .pay-button {
+    width: 100%;
+    padding: 16px;
+    background: #4b6cb7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin-bottom: 15px;
+  }
+  
+  .pay-button:hover:not(.disabled) {
+    background: #3b5998;
+    transform: translateY(-1px);
+  }
+  
+  .pay-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .security-note {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #718096;
+  }
+  
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: modalAppear 0.3s ease;
+  }
+  
+  @keyframes modalAppear {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .modal-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #4b6cb7;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+  }
+  
+  .modal-success {
+    width: 60px;
+    height: 60px;
+    background: #4ade80;
+    color: white;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+  .modal-error {
+    width: 60px;
+    height: 60px;
+    background: #f87171;
+    color: white;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+  .modal-content h3 {
+    margin: 0 0 10px 0;
+    color: #2d3748;
+    font-size: 20px;
+  }
+  
+  .modal-content p {
+    margin: 0 0 20px 0;
+    color: #718096;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .modal-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .modal-button.retry {
+    background: #4b6cb7;
+    color: white;
+  }
+  
+  .modal-button.retry:hover {
+    background: #3b5998;
+  }
+  
+  .modal-button:hover {
+    background: #e2e8f0;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @media (max-width: 480px) {
+    .payment-methods {
+      grid-template-columns: 1fr;
+    }
+    
+    .currency-selector {
+      flex-direction: column;
+    }
+    
+    .payment-card {
+      border-radius: 12px;
+    }
+    
+    .modal-buttons {
+      flex-direction: column;
+    }
+  }

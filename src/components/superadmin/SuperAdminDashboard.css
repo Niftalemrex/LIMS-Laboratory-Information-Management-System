@@ -1,0 +1,240 @@
+/* SuperAdminDashboard.css */
+/* ===== Theme Variables ===== */
+:root.default {
+  --bg-light: #ffffff;
+  --text: #333333;
+  --card-bg: #ffffff;
+  --border: #e0c097;
+  --primary: #f4a261;
+  --primary-dark: #e76f51;
+  --primary-hover: #e76f51;
+  --muted: #a89f91;
+  --radius: 12px;
+
+  --sidebar-width: 240px;
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #333333;
+  --sidebar-active: rgba(244, 162, 97, 0.1);
+  --content-bg: #f8fafc;
+  --text-primary: #333333;
+  --border-color: #e0c097;
+}
+
+:root.light {
+  --bg-light: #ffffff;
+  --text: #333333;
+  --card-bg: #ffffff;
+  --border: #e0c097;
+  --primary: #f4a261;
+  --primary-dark: #e76f51;
+  --primary-hover: #e76f51;
+  --muted: #a89f91;
+  --radius: 12px;
+
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #333333;
+  --sidebar-active: rgba(244, 162, 97, 0.15);
+  --content-bg: #f8fafc;
+  --text-primary: #333333;
+  --border-color: #e0c097;
+}
+
+:root.dark {
+  --bg-light: #000000;
+  --text: #eeeeee;
+  --card-bg: #000000;
+  --border: #3c4c4c;
+  --primary: #81b29a;
+  --primary-dark: #52796f;
+  --primary-hover: #52796f;
+  --muted: #9db1a9;
+  --radius: 12px;
+
+  --sidebar-bg: #121c1c;
+  --sidebar-text: #eeeeee;
+  --sidebar-active: rgba(129, 178, 154, 0.15);
+  --content-bg: #101717;
+  --text-primary: #eeeeee;
+  --border-color: #3c4c4c;
+}
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fafc;  /* Background color added here */
+}
+
+/* Dashboard Container */
+.superadmin-dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-light);
+}
+
+/* Sidebar Styles */
+.superadmin-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  margin: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active {
+  background-color: var(--sidebar-active);
+}
+
+.nav-icon {
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Main Content Styles */
+.superadmin-main-content {
+  margin-left: 100px;
+
+  margin-left: var(--sidebar-width);
+  
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1; /* Allow to stretch within parent */
+  overflow-y: none;
+  scrollbar-gutter: stable;
+  height: 100vh;
+}
+
+
+/* Optional wrapper inside content */
+.content-wrapper {
+  max-width: 2300px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .superadmin-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  
+  .superadmin-main-content {
+    margin-left: 0;
+  }
+}
+
+/* Card Styles */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Table Styles */
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+  background-color: #f3f4f6;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}

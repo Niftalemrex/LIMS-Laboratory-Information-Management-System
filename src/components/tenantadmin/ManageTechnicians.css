@@ -1,0 +1,279 @@
+/* Main container */
+.technicians-dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+}
+
+/* Header styles */
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-container {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  min-width: 300px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.status-filter {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  min-width: 150px;
+}
+
+.technician-count {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  white-space: nowrap;
+}
+
+/* Card styles */
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: auto;
+}
+
+.technicians-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.technicians-table th {
+  background-color: #3498db;
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.technicians-table th:hover {
+  background-color: #2980b9;
+}
+
+.technicians-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.technicians-table tr:last-child td {
+  border-bottom: none;
+}
+
+.technicians-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Technician info styles */
+.technician-name {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.certification-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  background-color: #e8f4f8;
+  color: #2980b9;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.secondary-text {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+/* Badges */
+.gender-badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.gender-badge.male {
+  background-color: #d4e6f1;
+  color: #2980b9;
+}
+
+.gender-badge.female {
+  background-color: #f5d3e8;
+  color: #9b59b6;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.inactive {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Contact info */
+.contact-info a {
+  display: block;
+  color: #3498db;
+  text-decoration: none;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.view-button, .edit-button {
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.view-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.view-button:hover {
+  background-color: #2980b9;
+}
+
+.edit-button {
+  background-color: #f39c12;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #e67e22;
+}
+
+/* Loading indicator */
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* No results */
+.no-results td {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .technicians-dashboard {
+      padding: 1rem;
+  }
+
+  .controls {
+      flex-direction: column;
+      align-items: stretch;
+  }
+
+  .search-container {
+      flex-direction: column;
+      gap: 0.5rem;
+  }
+
+  .technician-count {
+      text-align: center;
+  }
+
+  .action-buttons {
+      flex-direction: column;
+  }
+
+  .technicians-table th, 
+  .technicians-table td {
+      padding: 0.8rem 0.5rem;
+      font-size: 0.9rem;
+  }
+}

@@ -81,7 +81,7 @@ const TenantAccessAuth: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
-  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [, setLoginAttempts] = useState(0);
   
   // Tenant data
   const [tenant, setTenant] = useState<TenantData | null>(null);

@@ -43,7 +43,7 @@ interface SystemLog {
 const DashboardOverview: React.FC = () => {
   const { t } = useAppSettings();
   const navigate = useNavigate();
-  const { logs: contextLogs } = useSystemLogs();
+  const { } = useSystemLogs();
 
   const [hospitals, setHospitals] = useState<Tenant[]>([]);
   const [metrics, setMetrics] = useState<Metrics>({

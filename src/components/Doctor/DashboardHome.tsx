@@ -11,7 +11,6 @@ import {
   FiEdit,
   FiActivity,
   FiUser,
-  FiCalendar,
   FiBarChart2
 } from 'react-icons/fi';
 import { FaRegBell, FaRegStickyNote } from 'react-icons/fa';

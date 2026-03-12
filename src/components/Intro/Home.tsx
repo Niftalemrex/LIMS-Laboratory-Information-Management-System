@@ -3,8 +3,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import "./Home.css";
 import { 
-  Activity, AlertTriangle, Calendar, CheckCircle, Clock, 
-  FlaskConical, Package, TrendingUp, Users, 
+  Activity,  CheckCircle, Clock, 
+  FlaskConical, Package,  Users, 
   FileText, Thermometer, Award, Zap
 } from "lucide-react";
 

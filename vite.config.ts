@@ -12,5 +12,5 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['react-big-calendar', 'react-big-calendar/lib/css/react-big-calendar.css', 'moment'],
-  },
+  }
 });

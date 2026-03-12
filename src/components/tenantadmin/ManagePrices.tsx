@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import { TFunction } from 'i18next';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import './ManagePrices.css';
 
@@ -11,7 +12,7 @@ interface Service {
 }
 
 const ManagePrices: React.FC = () => {
-  const { t } = useAppSettings();
+  const { t }: { t: TFunction } = useAppSettings(); // Fixed typing
   const [services, setServices] = useState<Service[]>([
     { id: '1', name: 'Consultation', category: 'General', price: 100, lastUpdated: '2023-01-15' },
     { id: '2', name: 'ECG', category: 'Cardiology', price: 150, lastUpdated: '2023-02-20' },
@@ -28,29 +29,26 @@ const ManagePrices: React.FC = () => {
   }, []);
 
   const saveEdit = useCallback((id: string) => {
-    setServices(prevServices =>
-      prevServices.map(service =>
-        service.id === id
-          ? {
-              ...service,
-              price: editPrice,
-              lastUpdated: new Date().toISOString().split('T')[0],
-            }
-          : service
+    setServices(prev =>
+      prev.map(s =>
+        s.id === id
+          ? { ...s, price: editPrice, lastUpdated: new Date().toISOString().split('T')[0] }
+          : s
       )
     );
     setEditingId(null);
   }, [editPrice]);
 
-  const filteredServices = services.filter(service =>
-    service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    service.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   const handlePriceChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value);
     setEditPrice(isNaN(value) ? 0 : value);
   }, []);
+
+  const filteredServices = services.filter(
+    s =>
+      s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      s.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="manage-prices-container">
@@ -62,7 +60,7 @@ const ManagePrices: React.FC = () => {
             placeholder={t('search_services')}
             className="search-input"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             aria-label={t('search_services')}
           />
           <span className="result-count">
@@ -75,11 +73,11 @@ const ManagePrices: React.FC = () => {
         <table className="prices-table" aria-label={t('service_price_list')}>
           <thead>
             <tr>
-              <th scope="col">{t('service_name')}</th>
-              <th scope="col">{t('category')}</th>
-              <th scope="col">{t('price_dollar')}</th>
-              <th scope="col">{t('last_updated')}</th>
-              <th scope="col">{t('actions')}</th>
+              <th>{t('service_name')}</th>
+              <th>{t('category')}</th>
+              <th>{t('price_dollar')}</th>
+              <th>{t('last_updated')}</th>
+              <th>{t('actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -97,17 +95,15 @@ const ManagePrices: React.FC = () => {
                           type="number"
                           value={editPrice}
                           onChange={handlePriceChange}
-                          min="0"
-                          step="0.01"
+                          min={0}
+                          step={0.01}
                           className="price-input"
                           aria-label={t('edit_price_for', { name: service.name })}
                         />
                         <span className="currency-symbol">$</span>
                       </div>
                     ) : (
-                      <span className="price-display">
-                        ${service.price.toFixed(2)}
-                      </span>
+                      <span className="price-display">${service.price.toFixed(2)}</span>
                     )}
                   </td>
                   <td>
@@ -146,7 +142,7 @@ const ManagePrices: React.FC = () => {
                 </tr>
               ))
             ) : (
-              <tr className="no-results">
+              <tr>
                 <td colSpan={5}>{t('no_services_found')}</td>
               </tr>
             )}

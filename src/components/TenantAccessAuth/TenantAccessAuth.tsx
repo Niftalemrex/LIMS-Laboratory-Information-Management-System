@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './TenantAccessAuth.css';
-import axios from 'axios';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import type { Language } from '../contexts/AppSettingsContext';
 import SupportChat from './SupportChat';
@@ -60,12 +59,6 @@ interface TenantData {
   created_at: string;
 }
 
-// =================== CSRF Token ===================
-const getCSRFToken = (): string => {
-  const match = document.cookie.match(/csrftoken=([\w-]+)/);
-  return match?.[1] ?? '';
-};
-
 // =================== Component ===================
 const TenantAccessAuth: React.FC = () => {
   const navigate = useNavigate();
@@ -83,32 +76,14 @@ const TenantAccessAuth: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [, setLoginAttempts] = useState(0);
   
-  // Tenant data
-  const [tenant, setTenant] = useState<TenantData | null>(null);
-  const [loadingTenant, setLoadingTenant] = useState(true);
-  const [loading, setLoading] = useState(true);
+  // Tenant data – always null for demo
+  const [tenant] = useState<TenantData | null>(null);
+  const [] = useState(false);
+  const [] = useState(false);
 
-  const API_CURRENT_TENANT = 'http://127.0.0.1:8000/api/tenant/current/';
-
-  // Fetch current tenant (if any)
-  const fetchCurrentTenant = async () => {
-    try {
-      const res = await fetch(API_CURRENT_TENANT, { credentials: 'include' });
-      if (!res.ok) throw new Error('Failed to fetch current tenant');
-      const data: TenantData = await res.json();
-      setTenant(data);
-    } catch (err: any) {
-      console.error(err);
-      setErrors({ general: t('tenant_not_found') });
-      setTimeout(() => setErrors({}), 3000);
-    } finally {
-      setLoadingTenant(false);
-    }
-  };
-
+  // No API calls – everything is demo-only
   useEffect(() => {
-    fetchCurrentTenant();
-    setLoading(false);
+    // No tenant fetching – just a placeholder
   }, []);
 
   // Validation
@@ -144,99 +119,53 @@ const TenantAccessAuth: React.FC = () => {
     setEmail(demoEmails[demoRole]);
     setPassword('demo123');
     setRole(demoRole);
-    // Optionally auto-submit
-    // handleAccess();
+    // Optionally auto-submit:
+    // setTimeout(() => handleAccess(), 100);
   };
 
-  // Main login
+  // Main login – now only handles demo accounts
   const handleAccess = async () => {
     if (!validateForm()) return;
 
     setIsLoading(true);
     setErrors({});
 
-    // Simulate API delay (remove in production)
+    // Simulate network delay (remove if you want instant login)
     await new Promise(resolve => setTimeout(resolve, 800));
 
-    try {
-      // Demo accounts
-      const DEMO_USERS: Record<typeof role, string> = {
-        superadmin: 'superadmin@demo.com',
-        'tenant-admin': 'tenantadmin@demo.com',
-        doctor: 'doctor@demo.com',
-        technician: 'technician@demo.com',
-        support: 'support@demo.com',
-        patient: 'patient@demo.com',
+    // Demo accounts only
+    const DEMO_USERS: Record<typeof role, string> = {
+      superadmin: 'superadmin@demo.com',
+      'tenant-admin': 'tenantadmin@demo.com',
+      doctor: 'doctor@demo.com',
+      technician: 'technician@demo.com',
+      support: 'support@demo.com',
+      patient: 'patient@demo.com',
+    };
+
+    const isDemoLogin = password === 'demo123' && email === DEMO_USERS[role];
+
+    if (isDemoLogin) {
+      // Simulate successful demo login
+      const user: User = {
+        id: 'demo-' + role,
+        email,
+        role,
+        tenant: role === 'tenant-admin' ? 'demo-tenant' : undefined,
+        isPaid: true,
       };
 
-      const isDemoLogin = password === 'demo123' && email === DEMO_USERS[role];
-
-      if (isDemoLogin) {
-        // Simulate successful demo login
-        const user: User = {
-          id: 'demo-' + role,
-          email,
-          role,
-          tenant: role === 'tenant-admin' ? 'demo-tenant' : undefined,
-          isPaid: true,
-        };
-
-        // Log
-        addLog({
-          user: user.email,
-          action: `Demo login: ${user.email}`,
-          status: 'Success',
-          ipAddress: '127.0.0.1',
-          details: `Role: ${user.role}, Tenant: ${user.tenant || 'N/A'}`,
-        });
-        addSystemLog({
-          user: user.email,
-          action: 'Demo login successful',
-          status: 'Success',
-          ipAddress: '127.0.0.1',
-          details: `Role: ${user.role}, Tenant: ${user.tenant || 'N/A'}`,
-        });
-
-        // Navigate
-        navigate(getDashboardPath(user.role, user.tenant));
-        setIsLoading(false);
-        return;
-      }
-
-      // Real login
-      const res = await axios.post(
-        '/api/login/',
-        { email, password },
-        { headers: { 'X-CSRFToken': getCSRFToken() } }
-      );
-
-      const user: User = res.data.user;
-      if (!user) {
-        throw new Error('Invalid credentials');
-      }
-
-      if (user.tenant) {
-        try {
-          const tenantRes = await axios.get(API_CURRENT_TENANT, {
-            headers: { 'X-CSRFToken': getCSRFToken() },
-          });
-          setTenant(tenantRes.data);
-        } catch (err) {
-          console.error('Failed to fetch tenant after login', err);
-        }
-      }
-
-      // Logs
+      // Logs (still work with demo data)
       addLog({
         user: user.email,
-        action: `User logged in: ${user.email}`,
+        action: `Demo login: ${user.email}`,
         status: 'Success',
         ipAddress: '127.0.0.1',
         details: `Role: ${user.role}, Tenant: ${user.tenant || 'N/A'}`,
       });
       addSystemLog({
         user: user.email,
-        action: 'User successfully logged in',
+        action: 'Demo login successful',
         status: 'Success',
         ipAddress: '127.0.0.1',
         details: `Role: ${user.role}, Tenant: ${user.tenant || 'N/A'}`,
@@ -244,30 +173,28 @@ const TenantAccessAuth: React.FC = () => {
 
       // Navigate
       navigate(getDashboardPath(user.role, user.tenant));
-    } catch (err: any) {
-      console.error(err);
-      const errorMsg = err.response?.data?.detail || t('invalid_credentials');
-      setErrors({ general: errorMsg });
-
-      addLog({
-        user: email,
-        action: 'Failed login attempt',
-        status: 'Error',
-        ipAddress: '127.0.0.1',
-        details: errorMsg,
-      });
-      addSystemLog({
-        user: email,
-        action: 'Failed login attempt',
-        status: 'Error',
-        ipAddress: '127.0.0.1',
-        details: errorMsg,
-      });
-
-      setLoginAttempts(prev => prev + 1);
-    } finally {
       setIsLoading(false);
+      return;
     }
+
+    // If not a demo account, show error
+    setErrors({ general: t('invalid_credentials') });
+    addLog({
+      user: email,
+      action: 'Failed login attempt',
+      status: 'Error',
+      ipAddress: '127.0.0.1',
+      details: 'Invalid demo credentials',
+    });
+    addSystemLog({
+      user: email,
+      action: 'Failed login attempt',
+      status: 'Error',
+      ipAddress: '127.0.0.1',
+      details: 'Invalid demo credentials',
+    });
+    setLoginAttempts(prev => prev + 1);
+    setIsLoading(false);
   };
 
   const getDashboardPath = (role: string, tenantId?: string) => {
@@ -293,10 +220,9 @@ const TenantAccessAuth: React.FC = () => {
     if (errors.general) setErrors(prev => ({ ...prev, general: '' }));
   };
 
-  if (loading || loadingTenant) return <div className="auth-container">{t('loading')}</div>;
-
   return (
-    <div className="login-page-container" dir={rtlLanguages.includes(language) ? 'rtl' : 'ltr'}>
+    // Add the scoping class here!
+    <div className="tenant-access-auth-page login-page-container" dir={rtlLanguages.includes(language) ? 'rtl' : 'ltr'}>
       {/* LEFT SIDE - Branding & Background Image */}
       <div className="left-side" style={{ backgroundImage: `url(${labBackground})` }}>
         <div className="left-side-overlay"></div>
@@ -473,7 +399,7 @@ const TenantAccessAuth: React.FC = () => {
               )}
             </button>
 
-            {/* Tenant Info */}
+            {/* Tenant Info (always hidden now) */}
             {tenant && (
               <div className="tenant-info">
                 <p>Currently accessing: <strong>{tenant.company_name}</strong></p>

@@ -11,7 +11,7 @@ import {
   FiClock
 } from 'react-icons/fi';
 import './DashboardOverview.css';
-import { useAppSettings } from '../contexts/AppSettingsContext'; // Adjust the path as needed
+import { useAppSettings } from '../contexts/AppSettingsContext';
 
 interface DashboardCard {
   title: string;
@@ -94,7 +94,6 @@ const DashboardOverview: React.FC = () => {
 
   const handleRefresh = () => {
     setIsRefreshing(true);
-    // Simulate data refresh
     setTimeout(() => {
       setCards(prev => ({
         topCards: prev.topCards.map(card => ({
@@ -117,12 +116,12 @@ const DashboardOverview: React.FC = () => {
   };
 
   useEffect(() => {
-    // Update card titles when language changes
+    // Update card titles when language changes – safely access existing values
     setCards({
       topCards: [
         {
           title: t("today_samples"),
-          value: cards.topCards[0].value,
+          value: cards.topCards[0]?.value ?? "42",
           subtitle: t("collected_today"),
           icon: <FiPackage size={20} />,
           color: "#4F46E5",
@@ -131,7 +130,7 @@ const DashboardOverview: React.FC = () => {
         },
         {
           title: t("pending_tests"),
-          value: cards.topCards[1].value,
+          value: cards.topCards[1]?.value ?? "24",
           subtitle: t("waiting_processing"),
           icon: <FiActivity size={20} />,
           color: "#F59E0B",
@@ -140,7 +139,7 @@ const DashboardOverview: React.FC = () => {
         },
         {
           title: t("equipment_issues"),
-          value: cards.topCards[2].value,
+          value: cards.topCards[2]?.value ?? "5",
           subtitle: t("needs_maintenance"),
           icon: <FiAlertCircle size={20} />,
           color: "#EF4444",
@@ -150,7 +149,7 @@ const DashboardOverview: React.FC = () => {
       bottomCards: [
         {
           title: t("completed_today"),
-          value: cards.bottomCards[0].value,
+          value: cards.bottomCards[0]?.value ?? "18",
           subtitle: t("finished_tests"),
           icon: <FiCheckCircle size={20} />,
           color: "#10B981",
@@ -159,7 +158,7 @@ const DashboardOverview: React.FC = () => {
         },
         {
           title: t("personal_kpis"),
-          value: cards.bottomCards[1].value,
+          value: cards.bottomCards[1]?.value ?? "87%",
           subtitle: t("performance_score"),
           icon: <FiTrendingUp size={20} />,
           color: "#3B82F6",
@@ -168,7 +167,7 @@ const DashboardOverview: React.FC = () => {
         },
         {
           title: t("avg_turnaround"),
-          value: cards.bottomCards[2].value,
+          value: cards.bottomCards[2]?.value ?? "4.2h",
           subtitle: t("test_completion_time"),
           icon: <FiClock size={20} />,
           color: "#8B5CF6",

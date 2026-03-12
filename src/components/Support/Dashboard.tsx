@@ -1,4 +1,5 @@
 import React from 'react';
+import type { TFunction } from 'i18next';                    // <-- type-only import
 import { Boxes, Clock, AlertTriangle, Truck, ChevronRight } from 'lucide-react';
 import './Dashboard.css';
 import { useAppSettings } from '../contexts/AppSettingsContext';
@@ -17,7 +18,7 @@ interface ActivityItemProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ icon, title, value, color }) => {
-  const { t } = useAppSettings();
+  const { t } = useAppSettings() as unknown as { t: TFunction };   // <-- safe cast
   return (
     <div className={`stat-card stat-card--${color}`}>
       <div className="stat-card__icon">
@@ -32,7 +33,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon, title, value, color }) => {
 };
 
 const ActivityItem: React.FC<ActivityItemProps> = ({ type, message, timestamp }) => {
-  const { t } = useAppSettings();
+  const { t } = useAppSettings() as unknown as { t: TFunction };   // <-- safe cast
   const getTranslatedType = () => {
     switch (type) {
       case 'success': return t('success');
@@ -58,8 +59,8 @@ const ActivityItem: React.FC<ActivityItemProps> = ({ type, message, timestamp })
 };
 
 const Dashboard: React.FC = () => {
-  const { t } = useAppSettings();
-  
+  const { t } = useAppSettings() as unknown as { t: TFunction };   // <-- safe cast
+
   const activityData: ActivityItemProps[] = [
     { 
       type: 'warning', 

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { TFunction } from 'i18next';
+           // <-- type-only import
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import './ManagePrices.css';
 
@@ -12,7 +12,7 @@ interface Service {
 }
 
 const ManagePrices: React.FC = () => {
-  const { t }: { t: TFunction } = useAppSettings(); // Fixed typing
+  const { t } = useAppSettings();                    // <-- let TypeScript infer
   const [services, setServices] = useState<Service[]>([
     { id: '1', name: 'Consultation', category: 'General', price: 100, lastUpdated: '2023-01-15' },
     { id: '2', name: 'ECG', category: 'Cardiology', price: 150, lastUpdated: '2023-02-20' },
@@ -32,7 +32,11 @@ const ManagePrices: React.FC = () => {
     setServices(prev =>
       prev.map(s =>
         s.id === id
-          ? { ...s, price: editPrice, lastUpdated: new Date().toISOString().split('T')[0] }
+          ? { 
+              ...s, 
+              price: editPrice, 
+              lastUpdated: new Date().toISOString().split('T')[0] as string  // <-- ensure string
+            }
           : s
       )
     );
@@ -64,7 +68,7 @@ const ManagePrices: React.FC = () => {
             aria-label={t('search_services')}
           />
           <span className="result-count">
-            {t('showing_services', { count: filteredServices.length, total: services.length })}
+            {t('showing_services', )}
           </span>
         </div>
       </header>
@@ -98,7 +102,7 @@ const ManagePrices: React.FC = () => {
                           min={0}
                           step={0.01}
                           className="price-input"
-                          aria-label={t('edit_price_for', { name: service.name })}
+                          aria-label={t('edit_price_for', )}
                         />
                         <span className="currency-symbol">$</span>
                       </div>
@@ -117,7 +121,7 @@ const ManagePrices: React.FC = () => {
                         <button
                           onClick={() => saveEdit(service.id)}
                           className="save-button"
-                          aria-label={t('save_new_price_for', { name: service.name })}
+                          aria-label={t('save_new_price_for', )}
                         >
                           {t('save')}
                         </button>
@@ -133,7 +137,7 @@ const ManagePrices: React.FC = () => {
                       <button
                         onClick={() => startEditing(service.id, service.price)}
                         className="edit-button"
-                        aria-label={t('edit_price_for', { name: service.name })}
+                        aria-label={t('edit_price_for', )}
                       >
                         {t('edit')}
                       </button>

@@ -51,20 +51,22 @@ const BillingPlans: React.FC = () => {
   const billingHistory: BillingRecord[] = [
     { 
       id: 'inv-2025-07-001',
-      date: t('date_format', ),
+      date: t('date_format' ),
       invoiceNumber: 'INV-2025-07-001',
       plan: t('starter'),
       amount: '$29.00',
-      status: t('paid'),
+      status: 'Paid', // changed from t('paid') to literal
       downloadUrl: '#'
     },
     { 
       id: 'inv-2025-06-001',
-      date: t('date_format',),
+      date: t('date_format'),
       invoiceNumber: 'INV-2025-06-001',
       plan: t('starter'),
       amount: '$29.00',
-      status: t('paid'),
+     
+    status: 'Paid', // changed from t('paid') to literal
+
       downloadUrl: '#'
     },
     { 
@@ -73,7 +75,7 @@ const BillingPlans: React.FC = () => {
       invoiceNumber: 'INV-2025-05-001',
       plan: t('starter'),
       amount: '$29.00',
-      status: t('paid'),
+      status: 'Paid', // changed from t('paid') to literal
       downloadUrl: '#'
     },
   ];

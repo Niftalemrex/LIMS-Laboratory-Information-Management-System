@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { 
   FiDownload, FiPrinter, FiSearch, FiAlertTriangle, FiCheckCircle, FiXCircle,
-  FiClock, FiEye, FiEdit, FiTrash2, FiBarChart2, FiPaperclip
+  FiClock, FiEye, FiEdit, FiTrash2, FiBarChart2, 
 } from 'react-icons/fi';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import './TestReports.css';

@@ -27,10 +27,7 @@ interface Appointment {
   updatedAt: Date;
 }
 
-interface TimeSlot {
-  time: string;
-  available: boolean;
-}
+
 
 const Scheduling: React.FC = () => {
   const { t, language } = useAppSettings();
@@ -58,7 +55,7 @@ const Scheduling: React.FC = () => {
 
       // Merge approved that are not in scheduled
       const merged = [...scheduled];
-      approved.forEach(appr => {
+      approved.forEach((appr: Appointment) => {
         const exists = merged.find(a =>
           a.patientName === appr.patientName &&
           a.date === appr.date &&
@@ -75,25 +72,6 @@ const Scheduling: React.FC = () => {
 
   const [selectedDate, setSelectedDate] = useState(today);
   const [viewMode, setViewMode] = useState<'list' | 'day'>('list');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [newAppointment, setNewAppointment] = useState<Omit<Appointment, 'id' | 'createdAt' | 'updatedAt' | 'status'>>({
-    date: selectedDate,
-    startTime: '09:00',
-    endTime: '09:30',
-    type: 'Sample',
-    title: '',
-    description: '',
-    assignedTo: '',
-    patientName: '',
-    clinician: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    instrumentId: '',
-    source: 'Patient'
-  });
-
   const [filter, setFilter] = useState<{ types: AppointmentType[]; statuses: AppointmentStatus[] }>({ types: [], statuses: [] });
 
   // Save appointments dynamically
@@ -105,33 +83,6 @@ const Scheduling: React.FC = () => {
     setAppointments(prev => prev.map(appt => appt.id === id ? { ...appt, status, updatedAt: new Date() } : appt));
   };
 
-  const handleCreateAppointment = () => {
-    if (!newAppointment.title.trim()) return;
-    const appointment: Appointment = {
-      id: uuidv4(),
-      ...newAppointment,
-      status: 'Pending',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    setAppointments(prev => [...prev, appointment]);
-    setIsModalOpen(false);
-    setNewAppointment({ ...newAppointment, title: '', description: '', startTime: '09:00', endTime: '09:30' });
-  };
-
-  const generateTimeSlots = (date: string): TimeSlot[] => {
-    const slots: TimeSlot[] = [];
-    const existing = appointments.filter(a => a.date === date);
-    for (let hour = 8; hour < 18; hour++) {
-      for (let min = 0; min < 60; min += 30) {
-        const time = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
-        const available = !existing.some(a => time >= a.startTime && time < a.endTime);
-        slots.push({ time, available });
-      }
-    }
-    return slots;
-  };
-
   const filteredAppointments = appointments.filter(a =>
     (filter.types.length === 0 || filter.types.includes(a.type)) &&
     (filter.statuses.length === 0 || filter.statuses.includes(a.status))
@@ -140,6 +91,7 @@ const Scheduling: React.FC = () => {
   const dateAppointments = filteredAppointments.filter(a => viewMode === 'list' || a.date === selectedDate);
 
   const formatDate = (dateStr: string) => new Date(dateStr).toLocaleDateString(language, { weekday: 'short', month: 'short', day: 'numeric' });
+  
   const translateAppointmentType = (type: AppointmentType) => {
     const map: Record<AppointmentType, string> = {
       Sample: t('sample_collection'),
@@ -150,6 +102,7 @@ const Scheduling: React.FC = () => {
     };
     return map[type] || type;
   };
+  
   const translateAppointmentStatus = (status: AppointmentStatus) => {
     const map: Record<AppointmentStatus, string> = {
       Pending: t('pending'),
@@ -174,7 +127,7 @@ const Scheduling: React.FC = () => {
               <button className={`view-btn ${viewMode === 'day' ? 'active' : ''}`} onClick={() => setViewMode('day')}>{t('day_view')}</button>
             </div>
             <input type="date" value={selectedDate} min={today} onChange={e => setSelectedDate(e.target.value)} />
-            <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>{t('new_appointment')}</button>
+            {/* New Appointment button removed */}
           </div>
         </div>
 
@@ -201,8 +154,8 @@ const Scheduling: React.FC = () => {
         {/* Appointments List / Day View */}
         {dateAppointments.length === 0 ? (
           <div className="empty-state">
-            <p>{t('no_appointments_for_date', { date: formatDate(selectedDate) })}</p>
-            <button className="btn btn-primary" onClick={() => setIsModalOpen(true)}>{t('schedule_new_appointment')}</button>
+            <p>{t('no_appointments_for_date', )}</p>
+            {/* Schedule button removed */}
           </div>
         ) : viewMode === 'day' ? (
           <div className="day-view">
@@ -263,62 +216,6 @@ const Scheduling: React.FC = () => {
                 ))}
               </tbody>
             </table>
-          </div>
-        )}
-
-        {/* Modal */}
-        {isModalOpen && (
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h3>{t('new_appointment')}</h3>
-                <button onClick={() => setIsModalOpen(false)}>&times;</button>
-              </div>
-              <div className="modal-body">
-                <div className="form-group">
-                  <label>{t('date')}</label>
-                  <input type="date" value={newAppointment.date} min={today} onChange={e => setNewAppointment({ ...newAppointment, date: e.target.value })} />
-                </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>{t('start_time')}</label>
-                    <select value={newAppointment.startTime} onChange={e => setNewAppointment({ ...newAppointment, startTime: e.target.value })}>
-                      {generateTimeSlots(newAppointment.date).map(slot => (
-                        <option key={slot.time} value={slot.time} disabled={!slot.available}>{slot.time}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label>{t('end_time')}</label>
-                    <select value={newAppointment.endTime} onChange={e => setNewAppointment({ ...newAppointment, endTime: e.target.value })}>
-                      {generateTimeSlots(newAppointment.date).filter(slot => slot.time > newAppointment.startTime).map(slot => (
-                        <option key={slot.time} value={slot.time}>{slot.time}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label>{t('type')}</label>
-                  <select value={newAppointment.type} onChange={e => setNewAppointment({ ...newAppointment, type: e.target.value as AppointmentType })}>
-                    {['Sample', 'Test', 'Instrument', 'Maintenance', 'Consultation'].map(type => (
-                      <option key={type} value={type}>{translateAppointmentType(type as AppointmentType)}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>{t('title')}*</label>
-                  <input type="text" value={newAppointment.title} onChange={e => setNewAppointment({ ...newAppointment, title: e.target.value })} />
-                </div>
-                <div className="form-group">
-                  <label>{t('description')}</label>
-                  <textarea value={newAppointment.description} onChange={e => setNewAppointment({ ...newAppointment, description: e.target.value })} />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button onClick={() => setIsModalOpen(false)}>{t('cancel')}</button>
-                <button onClick={handleCreateAppointment} disabled={!newAppointment.title.trim()}>{t('create_appointment')}</button>
-              </div>
-            </div>
           </div>
         )}
       </div>

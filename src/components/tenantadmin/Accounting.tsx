@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import './Accounting.css';
 
@@ -83,11 +83,10 @@ const Accounting: React.FC = () => {
     search: ''
   });
 
-  const [sortConfig, setSortConfig] = useState<{key: keyof Transaction; direction: 'asc' | 'desc'} | null>(null);
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
   const [isAddingTransaction, setIsAddingTransaction] = useState(false);
   const [newTransaction, setNewTransaction] = useState<Omit<Transaction, 'id' | 'status'>>({
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split('T')[0] ?? '',
     description: '',
     amount: 0,
     type: 'Income',
@@ -130,36 +129,17 @@ const Accounting: React.FC = () => {
     setFilters(prev => ({ ...prev, [field]: value }));
   }, []);
 
-  const requestSort = useCallback((key: keyof Transaction) => {
-    let direction: 'asc' | 'desc' = 'asc';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-    setSortConfig({ key, direction });
-  }, [sortConfig]);
-
-  const sortedTransactions = React.useMemo(() => {
-    if (!sortConfig) return transactions;
-    
-    return [...transactions].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? -1 : 1;
-      }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? 1 : -1;
-      }
-      return 0;
-    });
-  }, [transactions, sortConfig]);
-
-  const filteredTransactions = sortedTransactions.filter(transaction => {
+  // Filtered transactions (no sorting)
+  const filteredTransactions = transactions.filter(transaction => {
     const matchesType = filters.type === 'All' || transaction.type === filters.type;
     const matchesStatus = filters.status === 'All' || transaction.status === filters.status;
     const matchesCategory = filters.category === 'All' || transaction.category === filters.category;
-    const matchesSearch = 
-      transaction.description.toLowerCase().includes(filters.search.toLowerCase()) ||
-      (transaction.patientName && transaction.patientName.toLowerCase().includes(filters.search.toLowerCase())) ||
-      (transaction.reference && transaction.reference.toLowerCase().includes(filters.search.toLowerCase()));
+
+    const searchLower = filters.search.toLowerCase();
+    const descriptionMatch = transaction.description.toLowerCase().includes(searchLower);
+    const patientNameMatch = transaction.patientName?.toLowerCase().includes(searchLower) ?? false;
+    const referenceMatch = transaction.reference?.toLowerCase().includes(searchLower) ?? false;
+    const matchesSearch = descriptionMatch || patientNameMatch || referenceMatch;
 
     return matchesType && matchesStatus && matchesCategory && matchesSearch;
   });
@@ -179,11 +159,6 @@ const Accounting: React.FC = () => {
     });
   };
 
-  const getSortIndicator = (key: keyof Transaction) => {
-    if (!sortConfig || sortConfig.key !== key) return '↕';
-    return sortConfig.direction === 'asc' ? '↑' : '↓';
-  };
-
   const handleAddTransaction = () => {
     const newId = (transactions.length + 1).toString();
     setTransactions(prev => [
@@ -196,7 +171,7 @@ const Accounting: React.FC = () => {
     ]);
     setIsAddingTransaction(false);
     setNewTransaction({
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split('T')[0] ?? '',
       description: '',
       amount: 0,
       type: 'Income',
@@ -344,18 +319,12 @@ const Accounting: React.FC = () => {
           <table className="transactions-table">
             <thead>
               <tr>
-                <th onClick={() => requestSort('date')}>
-                  {t('date')} {getSortIndicator('date')}
-                </th>
-                <th onClick={() => requestSort('description')}>
-                  {t('description')} {getSortIndicator('description')}
-                </th>
+                <th>{t('date')}</th>
+                <th>{t('description')}</th>
                 <th>{t('patient_reference')}</th>
                 <th>{t('category')}</th>
                 <th>{t('payment_method')}</th>
-                <th onClick={() => requestSort('amount')}>
-                  {t('amount')} {getSortIndicator('amount')}
-                </th>
+                <th>{t('amount')}</th>
                 <th>{t('status')}</th>
                 <th>{t('actions')}</th>
               </tr>

@@ -37,8 +37,8 @@ const Equipment: React.FC = () => {
 
   const [equipment, setEquipment] = useState<EquipmentItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<EquipmentStatus | 'All'>('All');
-  const [priorityFilter, setPriorityFilter] = useState<EquipmentPriority | 'All'>('All');
+  const [statusFilter, ] = useState<EquipmentStatus | 'All'>('All');
+  const [priorityFilter, ] = useState<EquipmentPriority | 'All'>('All');
   
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'calibration' | 'maintenance' | 'status' | 'add' | null>(null);

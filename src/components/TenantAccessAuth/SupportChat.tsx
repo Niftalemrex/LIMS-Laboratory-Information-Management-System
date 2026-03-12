@@ -33,7 +33,7 @@ const SupportChat: React.FC<SupportChatProps> = ({
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages: storeMessages, addMessage, conversations, addConversation, markConversationAsRead } =
+  const { messages: storeMessages, addMessage,  addConversation, markConversationAsRead } =
     useSupportStore();
 
   // ---------------- THEME ----------------

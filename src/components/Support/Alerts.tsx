@@ -2,17 +2,19 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Info, AlertTriangle, AlertCircle, Bell, BellOff, Filter } from 'lucide-react';
 import './Alerts.css';
 import { useAppSettings } from '../contexts/AppSettingsContext';
-import type { TenantLogEntry } from '../contexts/TenantLogsContext';
 import { useTenantLogs } from '../contexts/TenantLogsContext';
+
 
 type AlertType = 'info' | 'warning' | 'critical';
 
-interface Alert extends TenantLogEntry {
+// Define Alert independently – not extending TenantLogEntry
+interface Alert {
   id: string;
   type: AlertType;
   message: string;
-  status: string;
+  status: string; // maybe not needed, but kept
   timestamp: string;
+  // If you need more fields, add them explicitly
 }
 
 const Alerts: React.FC = () => {
@@ -38,62 +40,65 @@ const Alerts: React.FC = () => {
     fetchPersistedAlerts();
   }, []);
 
-  // Only add logs that aren't in persistedAlerts
-  const newLogs = useMemo(() => {
-    const persistedIds = new Set(persistedAlerts.map(a => a.id));
-    return logs
-      .filter(log => !persistedIds.has(log.id))
-      .map(log => ({
-        id: log.id,
-        type:
-          log.status.toLowerCase() === 'error'
-            ? 'critical'
-            : log.status.toLowerCase() === 'warning'
-            ? 'warning'
-            : 'info',
-        message: log.message || log.action || 'No message',
-        status: log.status || 'active',
-        timestamp: log.timestamp || new Date().toISOString(),
-      }));
-  }, [logs, persistedAlerts]);
+  // Convert tenant logs to Alert format
+  const logAlerts = useMemo(() => {
+    return logs.map((log): Alert => ({
+      id: log.id,
+      type:
+        log.status === 'Error' ? 'critical' :
+        log.status === 'Warning' ? 'warning' : 'info',
+      message: log.details || log.action || 'No message', // use details instead of message
+      status: log.status || 'active',
+      timestamp: log.timestamp || new Date().toISOString(),
+    }));
+  }, [logs]);
 
-  // Combine persistedAlerts + newLogs for UI
-  const alerts: Alert[] = useMemo(() => {
-    const allAlerts = [...persistedAlerts, ...newLogs];
+  // Combine persisted and log alerts, deduplicate by id
+  const allAlerts: Alert[] = useMemo(() => {
+    const combined = [...persistedAlerts, ...logAlerts];
+    // Deduplicate by id (keep first occurrence, which will be persisted if present)
+    const unique = new Map<string, Alert>();
+    combined.forEach(alert => {
+      if (!unique.has(alert.id)) unique.set(alert.id, alert);
+    });
+    const uniqueAlerts = Array.from(unique.values());
     // Sort descending by timestamp
-    return allAlerts.sort(
+    return uniqueAlerts.sort(
       (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
     );
-  }, [persistedAlerts, newLogs]);
+  }, [persistedAlerts, logAlerts]);
 
-  // Sync new logs to backend
+  // Sync new log alerts to backend (optional)
   useEffect(() => {
-    const syncNewLogs = async () => {
-      for (const log of newLogs) {
-        try {
-          const payload = { ...log };
-          const res = await fetch('http://localhost:8000/api/alerts/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
-          if (res.ok) {
-            setPersistedAlerts(prev => [...prev, payload]);
-          } else {
-            const errData = await res.json();
-            console.error(`Failed to post alert ${log.id}:`, errData);
+    const syncNewAlerts = async () => {
+      for (const logAlert of logAlerts) {
+        // Only post if not already persisted
+        if (!persistedAlerts.some(p => p.id === logAlert.id)) {
+          try {
+            const payload = { ...logAlert };
+            const res = await fetch('http://localhost:8000/api/alerts/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            if (res.ok) {
+              setPersistedAlerts(prev => [...prev, logAlert]);
+            } else {
+              const errData = await res.json();
+              console.error(`Failed to post alert ${logAlert.id}:`, errData);
+            }
+          } catch (err) {
+            console.error(`Error syncing alert ${logAlert.id}:`, err);
           }
-        } catch (err) {
-          console.error(`Error syncing alert ${log.id}:`, err);
         }
       }
     };
 
-    if (newLogs.length > 0) syncNewLogs();
-  }, [newLogs]);
+    if (logAlerts.length > 0) syncNewAlerts();
+  }, [logAlerts, persistedAlerts]);
 
   const toggleMute = () => setMuted(prev => !prev);
-  const filteredAlerts = alerts.filter(a => filter === 'all' || a.type === filter);
+  const filteredAlerts = allAlerts.filter(a => filter === 'all' || a.type === filter);
 
   const getAlertIcon = (type: AlertType) => {
     switch (type) {

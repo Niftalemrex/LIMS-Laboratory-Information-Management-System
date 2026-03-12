@@ -13,7 +13,6 @@ import {
 import './Monitoring.css';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import { useSystemLogs } from '../contexts/SystemLogsContext';
-//import { st } from '../utils/api'; // ✅ standard fetch wrapper
 
 interface User {
   id: string;
@@ -34,10 +33,22 @@ const Monitoring: React.FC = () => {
   const [filterRole, setFilterRole] = useState('All');
 
   useEffect(() => {
-    // ✅ fetch tenants dynamically
+    // Fetch users dynamically from backend
     const fetchUsers = async () => {
       try {
-        const data = await st('api/system/logs/', { method: 'GET' });
+        const response = await fetch('http://127.0.0.1:8000/api/system/logs/', {
+          method: 'GET',
+          credentials: 'include', // if using session cookies
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
         if (Array.isArray(data)) {
           const mapped: User[] = data.map((tenant: any) => ({
             id: tenant.id,
@@ -60,7 +71,7 @@ const Monitoring: React.FC = () => {
     };
 
     fetchUsers();
-  }, [logs]);
+  }, [logs]); // dependency on logs to refresh when logs change
 
   const roles = ['All', ...Array.from(new Set(users.map(u => u.role)))];
 

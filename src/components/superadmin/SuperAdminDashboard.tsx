@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent } from 'react';
+import React, { useState} from 'react';
 import './SuperAdminDashboard.css';
 import SuperAdminSidebar from './SuperAdminSidebar';
 import DashboardOverview from './DashboardOverview';
@@ -44,25 +44,20 @@ const SuperAdminDashboard: React.FC = () => {
     email: 'admin@system.com',
     avatar: '/api/placeholder/100/100',
   });
-  const [tenants, setTenants] = useState<Tenant[]>(tenantsMock);
+  const [] = useState<Tenant[]>(tenantsMock);
   const [activeSection, setActiveSection] = useState<string>('dashboard');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    // handle tenant input if needed
-  };
 
   const toggleMobileSidebar = () => setMobileSidebarOpen(prev => !prev);
 
   const renderSection = () => {
     switch (activeSection) {
       case 'dashboard': return <DashboardOverview />;
-      case 'create': return <CreateTenant newTenant={{name:'',domain:'',plan:'Free'}} onInputChange={handleInputChange} onCreate={() => {}} />;
-      case 'tenants': return <AllTenants tenants={tenants} />;
+      case 'create': return <CreateTenant />;                           // removed props
+      case 'tenants': return <AllTenants />;                            // removed props
       case 'usage': return <TenantUsage />;
       case 'billing': return <BillingPlans />;
-      case 'assign': return <AssignTenantAdmin tenants={tenants} onAssign={() => {}} />;
+      case 'assign': return <AssignTenantAdmin onAssign={() => {}} />; // removed tenants prop
       case 'logs': return <SystemLogs />;
       case 'global-notifications': return <GlobalNotifications />;
       case 'monitoring': return <Monitoring />;

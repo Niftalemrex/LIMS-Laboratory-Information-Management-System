@@ -23,7 +23,7 @@ const TenantAdminSidebar: React.FC<TenantAdminSidebarProps> = ({
   activeSection,
   onSectionChange,
   userMenuProfile,
-  setUserMenuProfile,
+
   mobileOpen,
   setMobileOpen,
 }) => {

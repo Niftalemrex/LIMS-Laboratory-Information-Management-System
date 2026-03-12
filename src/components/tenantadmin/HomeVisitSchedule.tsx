@@ -40,7 +40,7 @@ const HomeVisitSchedule: React.FC = () => {
   const [selectedVisit, setSelectedVisit] = useState<Visit | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [view, setView] = useState<'day' | 'week' | 'month' | 'agenda'>('week');
-  const [date, setDate] = useState(new Date());
+  const [date, ] = useState(new Date());
 
   // Load approved visits from both doctor and patient keys
   useEffect(() => {

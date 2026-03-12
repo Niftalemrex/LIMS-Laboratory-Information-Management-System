@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import './TenantAdminDashboard.css';
 import TenantAdminSidebar from './TenantAdminSidebar';
 
@@ -33,21 +33,7 @@ export interface UserMenuProfile {
   avatar?: string;
 }
 
-interface User {
-  id: number;
-  name: string;
-  role: 'Doctor' | 'Technician' | 'Support';
-}
-
-const initialUsers: User[] = [
-  { id: 1, name: 'Dr. Hana', role: 'Doctor' },
-  { id: 2, name: 'Tesfa Lab', role: 'Technician' },
-  { id: 3, name: 'Sami Support', role: 'Support' },
-];
-
 const TenantAdminDashboard: React.FC = () => {
-  const [users, setUsers] = useState<User[]>(initialUsers);
-  const [newUser, setNewUser] = useState<Omit<User, 'id'>>({ name: '', role: 'Doctor' });
   const [activeSection, setActiveSection] = useState<string>('overview');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
@@ -57,35 +43,10 @@ const TenantAdminDashboard: React.FC = () => {
     avatar: '/api/placeholder/100/100',
   });
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setNewUser((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleAddUser = () => {
-    if (!newUser.name.trim()) return;
-
-    const newEntry: User = {
-      id: users.length + 1,
-      name: newUser.name.trim(),
-      role: newUser.role,
-    };
-
-    setUsers([...users, newEntry]);
-    setNewUser({ name: '', role: 'Doctor' });
-  };
-
   const renderSection = () => {
     switch (activeSection) {
       case 'overview': return <DashboardOverview />;
-      case 'users': return (
-        <ManageUsers
-          users={users}
-          newUser={newUser}
-          onInputChange={handleInputChange}
-          onAddUser={handleAddUser}
-        />
-      );
+      case 'users': return <ManageUsers />;                     // ← props removed
       case 'tests': return <ConfigureTests />;
       case 'cultures': return <ManageCultures />;
       case 'prices': return <ManagePrices />;

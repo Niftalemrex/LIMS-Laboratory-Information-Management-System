@@ -63,7 +63,6 @@ const TestReports: React.FC = () => {
     search: ''
   });
 
-  const [sortConfig, setSortConfig] = useState<{key: keyof TestReport; direction: 'asc' | 'desc'} | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Simulate API loading
@@ -76,29 +75,8 @@ const TestReports: React.FC = () => {
     setFilters(prev => ({ ...prev, [field]: value }));
   }, []);
 
-  const requestSort = useCallback((key: keyof TestReport) => {
-    let direction: 'asc' | 'desc' = 'asc';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-    setSortConfig({ key, direction });
-  }, [sortConfig]);
-
-  const sortedReports = useCallback(() => {
-    if (!sortConfig) return reports;
-    
-    return [...reports].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? -1 : 1;
-      }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? 1 : -1;
-      }
-      return 0;
-    });
-  }, [reports, sortConfig]);
-
-  const filteredReports = sortedReports().filter(report => {
+  // Filtered reports (no sorting)
+  const filteredReports = reports.filter(report => {
     const matchesStatus = filters.status === 'All' || report.status === filters.status;
     const matchesPriority = filters.priority === 'All' || report.priority === filters.priority;
     const matchesSearch = 
@@ -126,11 +104,6 @@ const TestReports: React.FC = () => {
       month: 'short',
       day: 'numeric'
     });
-  };
-
-  const getSortIndicator = (key: keyof TestReport) => {
-    if (!sortConfig || sortConfig.key !== key) return '↕';
-    return sortConfig.direction === 'asc' ? '↑' : '↓';
   };
 
   const getStatusActions = (report: TestReport) => {
@@ -229,18 +202,10 @@ const TestReports: React.FC = () => {
               <table className="reports-table">
                 <thead>
                   <tr>
-                    <th onClick={() => requestSort('patientName')}>
-                      {t('patient')} {getSortIndicator('patientName')}
-                    </th>
-                    <th onClick={() => requestSort('testName')}>
-                      {t('test')} {getSortIndicator('testName')}
-                    </th>
-                    <th onClick={() => requestSort('date')}>
-                      {t('date')} {getSortIndicator('date')}
-                    </th>
-                    <th onClick={() => requestSort('priority')}>
-                      {t('priority')} {getSortIndicator('priority')}
-                    </th>
+                    <th>{t('patient')}</th>
+                    <th>{t('test')}</th>
+                    <th>{t('date')}</th>
+                    <th>{t('priority')}</th>
                     <th>{t('status')}</th>
                     <th>{t('result')}</th>
                     <th>{t('ordered_by')}</th>

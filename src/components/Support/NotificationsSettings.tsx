@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FiBell, FiMail, FiSmartphone, FiAlertCircle, FiSave } from 'react-icons/fi';
 import './NotificationsSettings.css';
 import { useAppSettings } from '../contexts/AppSettingsContext'; // Adjust import path as needed

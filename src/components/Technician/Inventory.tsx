@@ -1,11 +1,10 @@
 // src/components/Inventory.tsx (replace your existing file)
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 import './Inventory.css';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 
-type InventoryStatusLabel = 'Available' | 'Low Stock' | 'Out of Stock';
+
 
 // ================= Types =================
 interface InventoryItem {
@@ -41,17 +40,18 @@ const Inventory: React.FC = () => {
   const safeLanguage = language || navigator.language || 'en-US';
 
   // map backend status -> human label (localized)
-  const statusLabel = (status: InventoryItem['status']): InventoryStatusLabel => {
+  const statusLabel = (status: InventoryItem['status']): string => {
     switch (status) {
-      case 'available': return (t('available') as string) || 'Available';
-      case 'low_stock': return (t('lowStock') as string) || 'Low Stock';
-      case 'out_of_stock': return (t('outOfStock') as string) || 'Out of Stock';
-      default: return (t('available') as string) || 'Available';
+      case 'available': return t('available') || 'Available';
+      case 'low_stock': return t('lowStock') || 'Low Stock';
+      case 'out_of_stock': return t('outOfStock') || 'Out of Stock';
+      default: return t('available') || 'Available';
     }
+  
   };
 
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [history, setHistory] = useState<InventoryHistoryEntry[]>([]);
+  const [, setHistory] = useState<InventoryHistoryEntry[]>([]);
   const [modalOpen, setModalOpen] = useState<'issue' | 'receive' | 'add' | null>(null);
   const [selectedItem, setSelectedItem] = useState<InventoryItem | null>(null);
   const [quantity, setQuantity] = useState('');

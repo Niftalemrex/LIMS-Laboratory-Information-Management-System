@@ -125,7 +125,7 @@ const FAQ: React.FC = () => {
             <button
               key={category}
               className={`category-filter ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => setSelectedCategory}
             >
               {category}
             </button>

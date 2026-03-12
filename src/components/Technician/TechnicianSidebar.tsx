@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   FiGrid, FiDroplet, FiPackage, FiCalendar, FiLogOut,
-  FiChevronDown, FiSettings, FiChevronRight, FiClipboard,
+  FiChevronDown, FiSettings, FiChevronRight,
   FiBell, FiFileText, FiUserCheck
 } from 'react-icons/fi';
 import { MdScience } from 'react-icons/md';

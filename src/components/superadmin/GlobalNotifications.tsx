@@ -11,7 +11,6 @@ import {
 import './GlobalNotifications.css';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import { useSystemLogs } from '../contexts/SystemLogsContext';
-//import { st } from '../utils/api'; // ✅ API wrapper
 
 interface Notification {
   id: string;
@@ -31,22 +30,36 @@ const GlobalNotifications: React.FC = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        // ✅ API request (superadmin tenants used as example source)
-        const data = await st('api/system/logs/', { method: 'GET' });
+        // Fetch logs from the backend (adjust URL as needed)
+        const response = await fetch('http://127.0.0.1:8000/api/system/logs/', {
+          method: 'GET',
+          credentials: 'include', // include cookies if using session auth
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
         let mapped: Notification[] = [];
 
         if (Array.isArray(data)) {
-          mapped = data.map((tenant: any) => ({
-            id: tenant.id,
-            title: tenant.companyName || 'Tenant Registered',
-            message: tenant.email || 'No message',
-            date: tenant.createdAt || new Date().toISOString(),
-            status: tenant.isActive ? 'Sent' : 'Pending',
-            priority: 'medium'
+          mapped = data.map((item: any) => ({
+            id: item.id || item.timestamp,
+            title: item.action || 'System Action',
+            message: item.details || item.message || '',
+            date: item.timestamp ? new Date(item.timestamp).toISOString() : new Date().toISOString(),
+            status: item.status === 'Success' ? 'Sent' 
+                    : item.status === 'Pending' ? 'Pending' 
+                    : 'Failed',
+            priority: item.severity || 'medium'
           }));
         }
 
-        // ✅ Also include logs (system-wide events)
+        // Also include logs from context if any (e.g., from useSystemLogs)
         if (logs && logs.length > 0) {
           const mappedLogs: Notification[] = logs.map((log: any) => ({
             id: log.id || log.timestamp,
@@ -61,14 +74,16 @@ const GlobalNotifications: React.FC = () => {
           mapped = [...mapped, ...mappedLogs];
         }
 
-        setNotifications(mapped.reverse()); // newest first
+        // Sort newest first (assuming timestamp field exists)
+        const sorted = mapped.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setNotifications(sorted);
       } catch (err) {
         console.error('Failed to load notifications:', err);
       }
     };
 
     fetchNotifications();
-  }, [logs]);
+  }, [logs]); // Re‑fetch if logs context changes
 
   const StatusIcon = ({ status }: { status: Notification['status'] }) => {
     switch (status) {
@@ -90,6 +105,7 @@ const GlobalNotifications: React.FC = () => {
 
   return (
     <div className="global-notifications-container">
+      {/* Header */}
       <div className="gn-header">
         <div className="gn-header-left">
           <h1 className="gn-title">{t('global_notifications')}</h1>
@@ -123,6 +139,7 @@ const GlobalNotifications: React.FC = () => {
         </div>
       </div>
 
+      {/* Table */}
       <div className="gn-table-container">
         <table className="gn-table">
           <thead>
@@ -161,6 +178,7 @@ const GlobalNotifications: React.FC = () => {
         </table>
       </div>
 
+      {/* Pagination (placeholder) */}
       <div className="gn-footer">
         <div className="gn-pagination">
           <button className="pagination-button disabled">{t('previous')}</button>

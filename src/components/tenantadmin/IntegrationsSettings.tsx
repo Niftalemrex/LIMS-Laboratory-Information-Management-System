@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FiZap, FiCheck, FiPlus, FiSave } from 'react-icons/fi';
 import './IntegrationsSettings.css';
 import { useAppSettings } from '../contexts/AppSettingsContext'; // Adjust import path as needed

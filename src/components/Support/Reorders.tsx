@@ -4,7 +4,6 @@ import {
   FaExclamationTriangle, 
   FaCheckCircle, 
   FaChevronRight,
-  FaPlus,
   FaSearch,
   FaFilter
 } from 'react-icons/fa';

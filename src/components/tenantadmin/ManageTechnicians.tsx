@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import './ManageTechnicians.css';
 
@@ -14,6 +14,19 @@ interface Technician {
   certification?: string; // Optional field specific to technicians
 }
 
+interface StoredUser {
+  id: string;
+  name: string;
+  dob?: string;
+  gender?: string;
+  phone?: string;
+  email: string;
+  lastVisit?: string;
+  status?: string;
+  role: string;
+  certification?: string;
+}
+
 const ManageTechnicians: React.FC = () => {
   const { t } = useAppSettings();
   const [technicians, setTechnicians] = useState<Technician[]>([]);
@@ -27,10 +40,10 @@ const ManageTechnicians: React.FC = () => {
     const storedUsers = localStorage.getItem('tenantUsers');
     if (storedUsers) {
       try {
-        const users = JSON.parse(storedUsers);
+        const users: StoredUser[] = JSON.parse(storedUsers);
         const technicianUsers: Technician[] = users
-          .filter((u: any) => u.role === 'technician')
-          .map((u: any) => ({
+          .filter((u) => u.role === 'technician')
+          .map((u) => ({
             id: u.id,
             name: u.name,
             dob: u.dob || '2000-01-01',
@@ -39,7 +52,7 @@ const ManageTechnicians: React.FC = () => {
             email: u.email,
             lastVisit: u.lastVisit || new Date().toISOString(),
             status: u.status === 'inactive' ? 'inactive' : 'active',
-            certification: u.certification
+            certification: u.certification,
           }));
         setTechnicians(technicianUsers);
       } catch (e) {
@@ -57,17 +70,27 @@ const ManageTechnicians: React.FC = () => {
     setSortConfig({ key, direction });
   };
 
-  const sortedTechnicians = useCallback(() => {
+  const sortedTechnicians = useMemo(() => {
     if (!sortConfig) return technicians;
 
     return [...technicians].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'ascending' ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'ascending' ? 1 : -1;
-      return 0;
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+
+      // Handle null/undefined (should not happen with our defaults, but just in case)
+      if (aValue == null && bValue == null) return 0;
+      if (aValue == null) return 1; // null/undefined goes to end
+      if (bValue == null) return -1;
+
+      // Convert to string for safe comparison (all fields are strings or numbers that stringify nicely)
+      const aStr = String(aValue);
+      const bStr = String(bValue);
+      const comparison = aStr.localeCompare(bStr);
+      return sortConfig.direction === 'ascending' ? comparison : -comparison;
     });
   }, [technicians, sortConfig]);
 
-  const filteredTechnicians = sortedTechnicians().filter(tech => {
+  const filteredTechnicians = sortedTechnicians.filter((tech) => {
     const matchesSearch =
       tech.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       tech.phone.includes(searchTerm) ||
@@ -149,7 +172,7 @@ const ManageTechnicians: React.FC = () => {
                 </thead>
                 <tbody>
                   {filteredTechnicians.length > 0 ? (
-                    filteredTechnicians.map(tech => (
+                    filteredTechnicians.map((tech) => (
                       <tr key={tech.id}>
                         <td>
                           <div className="technician-name">{tech.name}</div>

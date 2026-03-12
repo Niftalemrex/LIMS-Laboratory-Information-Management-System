@@ -14,11 +14,12 @@ export const rtlLanguages: Language[] = ['ar'];
 
 
 interface AppSettingsContextType {
+  t: (key: string, vars?: Record<string, string | number>) => string;
   theme: Theme;
   language: Language;
   setTheme: (theme: Theme) => void;
   setLanguage: (language: Language) => void;
-  t: (key: string) => string;
+
   applyTheme: (theme: Theme) => void;
   isDarkMode: boolean;
 }
@@ -28,6 +29,7 @@ const AppSettingsContext = createContext<AppSettingsContextType>({
   language: 'en',
   setTheme: () => {},
   setLanguage: () => {},
+  
   t: (key: string, vars?: Record<string, string | number>) => key, // updated version
   applyTheme: () => {},
   isDarkMode: false,
@@ -8182,9 +8184,24 @@ export const AppSettingsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     localStorage.setItem('language', language);
   }, [language]);
 
-  const t = useCallback((key: string): string => {
-    const translationKey = key as keyof typeof translations['en'];
-    return translations[language]?.[translationKey] || translations.en[translationKey] || key;
+  const t = useCallback((key: string, vars?: Record<string, string | number>): string => {
+    type TranslationKey = keyof typeof translations['en'];
+    const translationKey = key as TranslationKey;
+  
+    // Cast the language object to the English shape
+    const langObj = translations[language] as typeof translations['en'];
+  
+    // Get the raw translation – it will be a literal, but we cast to string
+    let rawText = (langObj[translationKey] ?? translations.en[translationKey] ?? key) as string;
+  
+    if (vars) {
+      // Replace placeholders
+      Object.entries(vars).forEach(([k, v]) => {
+        rawText = rawText.replace(new RegExp(`{{${k}}}`, 'g'), String(v));
+      });
+    }
+  
+    return rawText;
   }, [language]);
 
   const contextValue = useMemo(() => ({

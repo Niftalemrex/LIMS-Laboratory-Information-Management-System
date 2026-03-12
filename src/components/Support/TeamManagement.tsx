@@ -53,17 +53,17 @@ const TeamManagement: React.FC<{ tenantId?: number }> = ({ tenantId = 1 }) => {
       if (!res.ok) throw new Error('Failed to fetch users');
       const data: any[] = await res.json();
 
-      // ✅ Map all users correctly
+      // ✅ Map all users correctly with safe defaults
       const mappedTeam: TeamMember[] = data.map(u => ({
         id: u.id,
-        name: u.name || 'N/A',
-        email: u.email || 'noemail@example.com',
-        phone: u.phone || '',
+        name: u.name ?? 'N/A',
+        email: u.email ?? 'noemail@example.com',
+        phone: u.phone ?? '',
         role: u.role as TeamMemberRole,
-        department: u.department || 'General',
-        status: u.status as TeamMemberStatus || 'active',
-        joinDate: u.joinDate || new Date().toISOString().split('T')[0],
-        lastActive: u.lastActive || new Date().toISOString()
+        department: u.department ?? 'General',
+        status: (u.status as TeamMemberStatus) ?? 'active',
+        joinDate: u.joinDate ?? new Date().toISOString().split('T')[0],
+        lastActive: u.lastActive ?? new Date().toISOString()
       }));
 
       setTeam(mappedTeam);
@@ -128,15 +128,8 @@ const TeamManagement: React.FC<{ tenantId?: number }> = ({ tenantId = 1 }) => {
       alert(t('fill_required_fields'));
       return;
     }
-    const newMember: TeamMember = {
-      id: team.length > 0 ? Math.max(...team.map(m => m.id)) + 1 : 1,
-      ...newMemberForm,
-      joinDate: new Date().toISOString().split('T')[0],
-      lastActive: new Date().toISOString()
-    };
-    setTeam(prev => [newMember, ...prev]);
-    resetForm();
-    setShowNewMemberForm(false);
+   
+   
   };
 
   const updateMember = () => {

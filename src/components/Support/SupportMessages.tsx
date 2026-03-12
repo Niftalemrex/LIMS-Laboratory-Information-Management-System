@@ -3,14 +3,14 @@ import { Send, Paperclip, Search, User, Clock, Check, X } from 'lucide-react';
 import './SupportMessages.css';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import { useSupportStore } from '../Support/SupportStore';
-import type { Message, Attachment, Conversation } from '../Support/SupportStore';
+import type { Message, Attachment } from '../Support/SupportStore';
 
 // Define TicketStatus including 'closed'
 type TicketStatus = 'open' | 'pending' | 'resolved' | 'closed';
 
 const SupportMessages: React.FC = () => {
   const { t } = useAppSettings();
-  const { messages: storeMessages, addMessage, conversations: storeConversations, updateConversation, addConversation } = useSupportStore();
+  const { messages: storeMessages, addMessage, conversations: storeConversations, updateConversation } = useSupportStore();
 
   const [selectedConversationId, setSelectedConversationId] = useState<number | null>(null);
   const [newMessage, setNewMessage] = useState('');

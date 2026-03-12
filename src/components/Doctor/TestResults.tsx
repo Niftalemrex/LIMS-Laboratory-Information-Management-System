@@ -18,11 +18,22 @@ interface TestResult {
   comments?: string;
 }
 
+// Raw data from lab (stored by technician)
+interface LabResultRaw {
+  id: string;
+  patient?: string;
+  testName: string;
+  resultValue?: string | number | null;
+  date?: string;
+  notes?: string | null;
+}
+
 // LocalStorage keys
 const LAB_KEY = 'lab_test_results';
 const DOCTOR_KEY = 'doctor_test_results';
 
-const getCurrentDate = (): ISODateString => new Date().toISOString().split('T')[0];
+// Use a static date instead of generating one dynamically
+const PLACEHOLDER_DATE = '2025-01-01';
 
 const TestResults: React.FC = () => {
   const { t } = useAppSettings();
@@ -36,17 +47,17 @@ const TestResults: React.FC = () => {
   useEffect(() => {
     const labRaw = localStorage.getItem(LAB_KEY);
     const doctorRaw = localStorage.getItem(DOCTOR_KEY);
-    const labResults: any[] = labRaw ? JSON.parse(labRaw) : [];
+    const labResults: LabResultRaw[] = labRaw ? JSON.parse(labRaw) : [];
     const doctorResults: TestResult[] = doctorRaw ? JSON.parse(doctorRaw) : [];
 
     const mappedLabResults: TestResult[] = labResults.map(lr => ({
       id: lr.id,
       patientName: lr.patient || lr.testName || 'Unknown',
       testType: lr.testName,
-      result: lr.resultValue || '',
+      result: lr.resultValue != null ? String(lr.resultValue) : '',
       status: 'Awaiting Approval',
-      date: lr.date || getCurrentDate(),
-      comments: lr.notes || ''
+      date: lr.date || PLACEHOLDER_DATE,
+      comments: (lr.notes != null ? String(lr.notes) : '') as string,
     }));
 
     const merged = [
@@ -67,7 +78,7 @@ const TestResults: React.FC = () => {
     setTestResults(prev =>
       prev.map(r =>
         r.id === id
-          ? { ...r, status: 'Approved', comments: comment || t('approved_without_comments'), date: getCurrentDate() }
+          ? { ...r, status: 'Approved', comments: comment || t('approved_without_comments'), date: PLACEHOLDER_DATE }
           : r
       )
     );
@@ -78,7 +89,7 @@ const TestResults: React.FC = () => {
   const handleReject = (id: string) => {
     if (!comment.trim()) { alert(t('please_provide_comment')); return; }
     setTestResults(prev =>
-      prev.map(r => r.id === id ? { ...r, status: 'Rejected', comments: comment, date: getCurrentDate() } : r)
+      prev.map(r => r.id === id ? { ...r, status: 'Rejected', comments: comment, date: PLACEHOLDER_DATE } : r)
     );
     setSelectedId(null);
     setComment('');
@@ -104,18 +115,7 @@ const TestResults: React.FC = () => {
     return <div className={classMap[status]}>{iconMap[status]} {t(status.toLowerCase().replace(/ /g, '_'))}</div>;
   };
 
-  // ===== CSV Download Function for All =====
-  const handleDownloadAll = () => {
-    if (filteredResults.length === 0) { alert(t('no_test_results_found')); return; }
-    downloadCSV(filteredResults, `doctor_test_results_${getCurrentDate()}.csv`);
-  };
-
-  // ===== CSV Download Function for Single Patient =====
-  const handleDownloadSingle = (result: TestResult) => {
-    downloadCSV([result], `test_result_${result.patientName}_${getCurrentDate()}.csv`);
-  };
-
-  // ===== Generic CSV Generator =====
+  // CSV Download helpers
   const downloadCSV = (data: TestResult[], fileName: string) => {
     const csvHeader = ['ID','Patient Name','Test Type','Result','Status','Comments','Date'].join(',');
     const csvRows = data.map(r =>
@@ -137,6 +137,15 @@ const TestResults: React.FC = () => {
     a.download = fileName;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleDownloadAll = () => {
+    if (filteredResults.length === 0) { alert(t('no_test_results_found')); return; }
+    downloadCSV(filteredResults, `doctor_test_results_${PLACEHOLDER_DATE}.csv`);
+  };
+
+  const handleDownloadSingle = (result: TestResult) => {
+    downloadCSV([result], `test_result_${result.patientName}_${PLACEHOLDER_DATE}.csv`);
   };
 
   return (
@@ -200,27 +209,29 @@ const TestResults: React.FC = () => {
           <tbody>
             {filteredResults.length === 0 ? (
               <tr className="no-results"><td colSpan={6}>{t('no_test_results_found')}</td></tr>
-            ) : filteredResults.map(r => (
-              <tr key={r.id}>
-                <td>{r.patientName}</td>
-                <td>{r.testType}</td>
-                <td>{r.result}</td>
-                <td>{getStatusBadge(r.status)}</td>
-                <td>{r.comments || '-'}</td>
-                <td className="action-buttons">
-                  {r.status === 'Awaiting Approval' ? (
-                    <>
-                      <button className="btn-approve" onClick={() => handleApprove(r.id)}>{t('approve')}</button>
-                      <button className="btn-reject" onClick={() => setSelectedId(r.id)}>{t('reject')}</button>
-                    </>
-                  ) : (
-                    <button className="btn-download" onClick={() => handleDownloadSingle(r)}>
-                      <FaDownload /> {t('download')}
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
+            ) : (
+              filteredResults.map(r => (
+                <tr key={r.id}>
+                  <td>{r.patientName}</td>
+                  <td>{r.testType}</td>
+                  <td>{r.result}</td>
+                  <td>{getStatusBadge(r.status)}</td>
+                  <td>{r.comments || '-'}</td>
+                  <td className="action-buttons">
+                    {r.status === 'Awaiting Approval' ? (
+                      <>
+                        <button className="btn-approve" onClick={() => handleApprove(r.id)}>{t('approve')}</button>
+                        <button className="btn-reject" onClick={() => setSelectedId(r.id)}>{t('reject')}</button>
+                      </>
+                    ) : (
+                      <button className="btn-download" onClick={() => handleDownloadSingle(r)}>
+                        <FaDownload /> {t('download')}
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

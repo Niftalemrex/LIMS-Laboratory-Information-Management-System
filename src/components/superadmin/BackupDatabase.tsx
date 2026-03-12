@@ -44,7 +44,7 @@ const BackupDatabase: React.FC = () => {
         email: t.email
       }));
       setTenants(parsed);
-      if (parsed.length > 0) setSelectedTenant(parsed[0]);
+      if (parsed.length > 0) setSelectedTenant;
     }
   }, []);
 

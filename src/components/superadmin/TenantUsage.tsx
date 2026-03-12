@@ -125,7 +125,7 @@ const TenantUsage: React.FC = () => {
 
   // ---------------- Stats ----------------
   const totalActiveUsers = users.length;
-  const totalTenants = tenants.length;
+
   const activeTenants = tenants.length; // count all tenants (no isPaid filter)
 
   const totalApiCalls = tenants.reduce((sum, t) => sum + (t.apiCalls || 0), 0);
@@ -160,7 +160,7 @@ const TenantUsage: React.FC = () => {
 
   // ---------------- Weekly usage (mocked from tenants apiCalls) ----------------
   const weeklyUsage = tenants.slice(0, 7).map((tenant, idx) => ({
-    day: t(['mon','tue','wed','thu','fri','sat','sun'][idx]),
+    day: ['mon','tue','wed','thu','fri','sat','sun'][idx],
     usage: tenant.apiCalls || 0,
     trend: Math.random() > 0.5 ? 'up' : 'down'
   }));

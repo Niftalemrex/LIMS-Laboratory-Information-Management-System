@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { useAppSettings } from '../contexts/AppSettingsContext';
 import './ReceiptsPrinting.css';
 
@@ -37,7 +37,7 @@ const ReceiptsPrinting: React.FC = () => {
       paymentMethod: 'Insurance',
       printed: true,
       printedBy: 'Admin User',
-      printedAt: '2023-05-16 14:30',
+      printedAt: '2023-05-16T14:30:00', // ensure ISO string
       services: ['X-Ray', 'ECG']
     },
     { 
@@ -80,21 +80,36 @@ const ReceiptsPrinting: React.FC = () => {
     setSortConfig({ key, direction });
   }, [sortConfig]);
 
-  const sortedReceipts = useCallback(() => {
+  // Use useMemo to compute sorted receipts array
+  const sortedReceipts = useMemo(() => {
     if (!sortConfig) return receipts;
     
     return [...receipts].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? -1 : 1;
+      const aVal = a[sortConfig.key];
+      const bVal = b[sortConfig.key];
+      
+      // Handle null/undefined (should not happen but just in case)
+      if (aVal == null && bVal == null) return 0;
+      if (aVal == null) return 1;
+      if (bVal == null) return -1;
+      
+      // Compare based on type
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        const comparison = aVal.localeCompare(bVal);
+        return sortConfig.direction === 'asc' ? comparison : -comparison;
       }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === 'asc' ? 1 : -1;
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortConfig.direction === 'asc' ? aVal - bVal : bVal - aVal;
       }
-      return 0;
+      // Fallback for other types (e.g., boolean)
+      const aStr = String(aVal);
+      const bStr = String(bVal);
+      const comparison = aStr.localeCompare(bStr);
+      return sortConfig.direction === 'asc' ? comparison : -comparison;
     });
   }, [receipts, sortConfig]);
 
-  const filteredReceipts = sortedReceipts().filter(receipt => {
+  const filteredReceipts = sortedReceipts.filter(receipt => {
     const matchesStatus = 
       filters.status === 'all' || 
       (filters.status === 'printed' && receipt.printed) || 
@@ -117,11 +132,10 @@ const ReceiptsPrinting: React.FC = () => {
       receipt.id === id ? { 
         ...receipt, 
         printed: true,
-        printedBy: t('current_user'), // Replace with actual user from auth context
+        printedBy: t('current_user') || 'Current User', // fallback
         printedAt: printedAt
       } : receipt
     ));
-    // In a real app, you would call your print API here
     console.log(`Printing receipt ${id} at ${printedAt}`);
   }, [t]);
 
@@ -159,11 +173,10 @@ const ReceiptsPrinting: React.FC = () => {
         !receipt.printed ? { 
           ...receipt, 
           printed: true,
-          printedBy: t('current_user'),
+          printedBy: t('current_user') || 'Current User',
           printedAt: printedAt
         } : receipt
       ));
-      // In a real app, you would call your batch print API here
       console.log(`Printing ${pendingReceipts.length} receipts at ${printedAt}`);
     }
   }, [receipts, t]);

@@ -1,7 +1,6 @@
-/* TenantAccessAuth.css - Scoped only to TenantAccessAuth page */
-/* Add class="tenant-access-auth-page" to the root element of this page */
+/* TenantAccessAuth.css - Elegant LIMS Login */
 
-.tenant-access-auth-page {
+:root {
   --primary: #4361ee;
   --primary-light: #4895ef;
   --primary-dark: #3a0ca3;
@@ -18,26 +17,26 @@
   --transition: all 0.3s ease;
 }
 
-.tenant-access-auth-page * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.tenant-access-auth-page body {
+body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: var(--dark);
 }
 
-.tenant-access-auth-page .login-page-container {
+.login-page-container {
   display: flex;
   min-height: 100vh;
   position: relative;
 }
 
 /* ===== LEFT SIDE ===== */
-.tenant-access-auth-page .left-side {
+.left-side {
   flex: 1;
   background-size: cover;
   background-position: center;
@@ -49,7 +48,7 @@
   overflow: hidden;
 }
 
-.tenant-access-auth-page .left-side-overlay {
+.left-side-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -59,7 +58,7 @@
   z-index: 1;
 }
 
-.tenant-access-auth-page .left-side-content {
+.left-side-content {
   position: relative;
   z-index: 2;
   max-width: 500px;
@@ -67,11 +66,11 @@
   text-align: center;
 }
 
-.tenant-access-auth-page .brand-header {
+.brand-header {
   margin-bottom: 3rem;
 }
 
-.tenant-access-auth-page .lims-logo {
+.lims-logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,28 +80,28 @@
   margin-bottom: 1rem;
 }
 
-.tenant-access-auth-page .brand-name {
+.brand-name {
   font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.tenant-access-auth-page .brand-tagline {
+.brand-tagline {
   font-size: 1rem;
   opacity: 0.9;
   letter-spacing: 1px;
 }
 
 /* Features Grid (left side) */
-.tenant-access-auth-page .features-grid {
+.features-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin: 2rem 0;
 }
 
-.tenant-access-auth-page .feature-card {
+.feature-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -112,43 +111,43 @@
   transition: transform 0.3s;
 }
 
-.tenant-access-auth-page .feature-card:hover {
+.feature-card:hover {
   transform: translateY(-5px);
   background: rgba(255, 255, 255, 0.15);
 }
 
-.tenant-access-auth-page .feature-icon {
+.feature-icon {
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
-.tenant-access-auth-page .feature-card h4 {
+.feature-card h4 {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
-.tenant-access-auth-page .feature-card p {
+.feature-card p {
   font-size: 0.8rem;
   opacity: 0.8;
 }
 
-.tenant-access-auth-page .app-downloads {
+.app-downloads {
   margin-top: 2rem;
 }
 
-.tenant-access-auth-page .app-downloads p {
+.app-downloads p {
   margin-bottom: 1rem;
   font-size: 0.9rem;
 }
 
-.tenant-access-auth-page .download-buttons {
+.download-buttons {
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
 
-.tenant-access-auth-page .download-btn {
+.download-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -162,12 +161,12 @@
   transition: background 0.3s;
 }
 
-.tenant-access-auth-page .download-btn:hover {
+.download-btn:hover {
   background: rgba(255, 255, 255, 0.3);
 }
 
 /* ===== RIGHT SIDE ===== */
-.tenant-access-auth-page .right-side {
+.right-side {
   flex: 1;
   display: flex;
   align-items: center;
@@ -176,55 +175,55 @@
   padding: 2rem;
 }
 
-.tenant-access-auth-page .login-card-wrapper {
+.login-card-wrapper {
   width: 100%;
   max-width: 480px;
 }
 
-.tenant-access-auth-page .login-card {
+.login-card {
   background: white;
   border-radius: 2rem;
   padding: 2.5rem;
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
 }
 
-.tenant-access-auth-page .welcome-message {
+.welcome-message {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.tenant-access-auth-page .login-title {
+.login-title {
   font-size: 2rem;
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 0.5rem;
 }
 
-.tenant-access-auth-page .login-subtitle {
+.login-subtitle {
   color: #475569;
   font-size: 0.95rem;
 }
 
 /* Demo buttons */
-.tenant-access-auth-page .demo-login-section {
+.demo-login-section {
   margin-bottom: 1.5rem;
 }
 
-.tenant-access-auth-page .demo-label {
+.demo-label {
   font-size: 0.85rem;
   color: #64748b;
   margin-bottom: 0.75rem;
   text-align: center;
 }
 
-.tenant-access-auth-page .demo-buttons {
+.demo-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
 }
 
-.tenant-access-auth-page .demo-button {
+.demo-button {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -239,24 +238,24 @@
   color: #1e293b;
 }
 
-.tenant-access-auth-page .demo-button:hover {
+.demo-button:hover {
   transform: translateY(-2px);
   filter: brightness(0.95);
 }
 
-.tenant-access-auth-page .demo-button.superadmin { background: #3b82f6; color: white; }
-.tenant-access-auth-page .demo-button.tenant-admin { background: #8b5cf6; color: white; }
-.tenant-access-auth-page .demo-button.doctor { background: #10b981; color: white; }
-.tenant-access-auth-page .demo-button.technician { background: #f59e0b; color: white; }
-.tenant-access-auth-page .demo-button.support { background: #6366f1; color: white; }
-.tenant-access-auth-page .demo-button.patient { background: #ec4899; color: white; }
+.demo-button.superadmin { background: #3b82f6; color: white; }
+.demo-button.tenant-admin { background: #8b5cf6; color: white; }
+.demo-button.doctor { background: #10b981; color: white; }
+.demo-button.technician { background: #f59e0b; color: white; }
+.demo-button.support { background: #6366f1; color: white; }
+.demo-button.patient { background: #ec4899; color: white; }
 
 /* Form groups */
-.tenant-access-auth-page .form-group {
+.form-group {
   margin-bottom: 1.5rem;
 }
 
-.tenant-access-auth-page .input-with-icon {
+.input-with-icon {
   position: relative;
   display: flex;
   align-items: center;
@@ -266,27 +265,27 @@
   background: white;
 }
 
-.tenant-access-auth-page .input-with-icon:focus-within {
+.input-with-icon:focus-within {
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.tenant-access-auth-page .input-with-icon.error {
+.input-with-icon.error {
   border-color: #ef4444;
 }
 
-.tenant-access-auth-page .input-with-icon.success {
+.input-with-icon.success {
   border-color: #10b981;
 }
 
-.tenant-access-auth-page .input-icon {
+.input-icon {
   position: absolute;
   left: 1rem;
   color: #94a3b8;
 }
 
-.tenant-access-auth-page .input-with-icon input,
-.tenant-access-auth-page .input-with-icon select {
+.input-with-icon input,
+.input-with-icon select {
   width: 100%;
   padding: 0.9rem 1rem 0.9rem 3rem;
   border: none;
@@ -296,7 +295,7 @@
   outline: none;
 }
 
-.tenant-access-auth-page .password-input-wrapper {
+.password-input-wrapper {
   display: flex;
   align-items: center;
   border: 1px solid #e2e8f0;
@@ -305,32 +304,32 @@
   background: white;
 }
 
-.tenant-access-auth-page .password-input-wrapper:focus-within {
+.password-input-wrapper:focus-within {
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.tenant-access-auth-page .password-input-wrapper.error {
+.password-input-wrapper.error {
   border-color: #ef4444;
 }
 
-.tenant-access-auth-page .password-input-wrapper.success {
+.password-input-wrapper.success {
   border-color: #10b981;
 }
 
-.tenant-access-auth-page .password-input-wrapper .input-with-icon {
+.password-input-wrapper .input-with-icon {
   flex: 1;
   border: none;
 }
 
-.tenant-access-auth-page .password-actions {
+.password-actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding-right: 0.5rem;
 }
 
-.tenant-access-auth-page .password-toggle {
+.password-toggle {
   background: none;
   border: none;
   color: #64748b;
@@ -340,18 +339,18 @@
   padding: 0.25rem;
 }
 
-.tenant-access-auth-page .success-icon {
+.success-icon {
   color: #10b981;
 }
 
-.tenant-access-auth-page .error-message {
+.error-message {
   display: block;
   font-size: 0.75rem;
   color: #ef4444;
   margin-top: 0.25rem;
 }
 
-.tenant-access-auth-page .error-alert {
+.error-alert {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -364,7 +363,7 @@
 }
 
 /* Form options */
-.tenant-access-auth-page .form-options {
+.form-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -372,29 +371,29 @@
   font-size: 0.875rem;
 }
 
-.tenant-access-auth-page .remember-me {
+.remember-me {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.tenant-access-auth-page .remember-me input[type="checkbox"] {
+.remember-me input[type="checkbox"] {
   width: 16px;
   height: 16px;
   accent-color: #3b82f6;
 }
 
-.tenant-access-auth-page .forgot-password {
+.forgot-password {
   color: #3b82f6;
   text-decoration: none;
 }
 
-.tenant-access-auth-page .forgot-password:hover {
+.forgot-password:hover {
   text-decoration: underline;
 }
 
 /* Login button */
-.tenant-access-auth-page .login-button {
+.login-button {
   width: 100%;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
@@ -411,17 +410,17 @@
   margin-bottom: 1rem;
 }
 
-.tenant-access-auth-page .login-button:hover {
+.login-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
 }
 
-.tenant-access-auth-page .login-button.loading {
+.login-button.loading {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.tenant-access-auth-page .button-loader {
+.button-loader {
   width: 18px;
   height: 18px;
   border: 2px solid rgba(255,255,255,0.3);
@@ -434,47 +433,47 @@
   to { transform: rotate(360deg); }
 }
 
-.tenant-access-auth-page .arrow-icon {
+.arrow-icon {
   width: 18px;
   height: 18px;
   fill: white;
 }
 
 /* Tenant info & create link */
-.tenant-access-auth-page .tenant-info {
+.tenant-info {
   text-align: center;
   font-size: 0.875rem;
   color: #475569;
   margin: 1rem 0;
 }
 
-.tenant-access-auth-page .tenant-info strong {
+.tenant-info strong {
   color: #0f172a;
 }
 
-.tenant-access-auth-page .create-tenant-link {
+.create-tenant-link {
   text-align: center;
   margin: 1rem 0;
   font-size: 0.875rem;
 }
 
-.tenant-access-auth-page .create-tenant-link a {
+.create-tenant-link a {
   color: #3b82f6;
   text-decoration: none;
   font-weight: 500;
 }
 
-.tenant-access-auth-page .create-tenant-link a:hover {
+.create-tenant-link a:hover {
   text-decoration: underline;
 }
 
 /* Language selector */
-.tenant-access-auth-page .language-selector {
+.language-selector {
   text-align: center;
   margin-top: 1.5rem;
 }
 
-.tenant-access-auth-page .language-selector select {
+.language-selector select {
   padding: 0.5rem 1rem;
   border-radius: 50px;
   border: 1px solid #e2e8f0;
@@ -484,14 +483,14 @@
 }
 
 /* Support Chat (keep existing styles) */
-.tenant-access-auth-page .support-container {
+.support-container {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   z-index: 100;
 }
 
-.tenant-access-auth-page .support-button {
+.support-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -507,31 +506,31 @@
   height: 48px;
 }
 
-.tenant-access-auth-page .support-button:hover {
+.support-button:hover {
   background-color: #3a0ca3;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .tenant-access-auth-page .login-page-container {
+  .login-page-container {
     flex-direction: column;
   }
-  .tenant-access-auth-page .left-side {
+  .left-side {
     min-height: 400px;
   }
-  .tenant-access-auth-page .features-grid {
+  .features-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 640px) {
-  .tenant-access-auth-page .login-card {
+  .login-card {
     padding: 1.5rem;
   }
-  .tenant-access-auth-page .features-grid {
+  .features-grid {
     grid-template-columns: 1fr;
   }
-  .tenant-access-auth-page .demo-buttons {
+  .demo-buttons {
     flex-direction: column;
     align-items: stretch;
   }

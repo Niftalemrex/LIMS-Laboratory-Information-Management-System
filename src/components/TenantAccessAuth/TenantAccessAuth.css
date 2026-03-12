@@ -1,6 +1,7 @@
-/* TenantAccessAuth.css - Elegant LIMS Login */
+/* TenantAccessAuth.css - Scoped only to TenantAccessAuth page */
+/* Add class="tenant-access-auth-page" to the root element of this page */
 
-:root {
+.tenant-access-auth-page {
   --primary: #4361ee;
   --primary-light: #4895ef;
   --primary-dark: #3a0ca3;
@@ -17,26 +18,26 @@
   --transition: all 0.3s ease;
 }
 
-* {
+.tenant-access-auth-page * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+.tenant-access-auth-page body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: var(--dark);
 }
 
-.login-page-container {
+.tenant-access-auth-page .login-page-container {
   display: flex;
   min-height: 100vh;
   position: relative;
 }
 
 /* ===== LEFT SIDE ===== */
-.left-side {
+.tenant-access-auth-page .left-side {
   flex: 1;
   background-size: cover;
   background-position: center;
@@ -48,7 +49,7 @@ body {
   overflow: hidden;
 }
 
-.left-side-overlay {
+.tenant-access-auth-page .left-side-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -58,7 +59,7 @@ body {
   z-index: 1;
 }
 
-.left-side-content {
+.tenant-access-auth-page .left-side-content {
   position: relative;
   z-index: 2;
   max-width: 500px;
@@ -66,11 +67,11 @@ body {
   text-align: center;
 }
 
-.brand-header {
+.tenant-access-auth-page .brand-header {
   margin-bottom: 3rem;
 }
 
-.lims-logo {
+.tenant-access-auth-page .lims-logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,28 +81,28 @@ body {
   margin-bottom: 1rem;
 }
 
-.brand-name {
+.tenant-access-auth-page .brand-name {
   font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.brand-tagline {
+.tenant-access-auth-page .brand-tagline {
   font-size: 1rem;
   opacity: 0.9;
   letter-spacing: 1px;
 }
 
 /* Features Grid (left side) */
-.features-grid {
+.tenant-access-auth-page .features-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin: 2rem 0;
 }
 
-.feature-card {
+.tenant-access-auth-page .feature-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -111,43 +112,43 @@ body {
   transition: transform 0.3s;
 }
 
-.feature-card:hover {
+.tenant-access-auth-page .feature-card:hover {
   transform: translateY(-5px);
   background: rgba(255, 255, 255, 0.15);
 }
 
-.feature-icon {
+.tenant-access-auth-page .feature-icon {
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
 
-.feature-card h4 {
+.tenant-access-auth-page .feature-card h4 {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
-.feature-card p {
+.tenant-access-auth-page .feature-card p {
   font-size: 0.8rem;
   opacity: 0.8;
 }
 
-.app-downloads {
+.tenant-access-auth-page .app-downloads {
   margin-top: 2rem;
 }
 
-.app-downloads p {
+.tenant-access-auth-page .app-downloads p {
   margin-bottom: 1rem;
   font-size: 0.9rem;
 }
 
-.download-buttons {
+.tenant-access-auth-page .download-buttons {
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
 
-.download-btn {
+.tenant-access-auth-page .download-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -161,12 +162,12 @@ body {
   transition: background 0.3s;
 }
 
-.download-btn:hover {
+.tenant-access-auth-page .download-btn:hover {
   background: rgba(255, 255, 255, 0.3);
 }
 
 /* ===== RIGHT SIDE ===== */
-.right-side {
+.tenant-access-auth-page .right-side {
   flex: 1;
   display: flex;
   align-items: center;
@@ -175,55 +176,55 @@ body {
   padding: 2rem;
 }
 
-.login-card-wrapper {
+.tenant-access-auth-page .login-card-wrapper {
   width: 100%;
   max-width: 480px;
 }
 
-.login-card {
+.tenant-access-auth-page .login-card {
   background: white;
   border-radius: 2rem;
   padding: 2.5rem;
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
 }
 
-.welcome-message {
+.tenant-access-auth-page .welcome-message {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.login-title {
+.tenant-access-auth-page .login-title {
   font-size: 2rem;
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 0.5rem;
 }
 
-.login-subtitle {
+.tenant-access-auth-page .login-subtitle {
   color: #475569;
   font-size: 0.95rem;
 }
 
 /* Demo buttons */
-.demo-login-section {
+.tenant-access-auth-page .demo-login-section {
   margin-bottom: 1.5rem;
 }
 
-.demo-label {
+.tenant-access-auth-page .demo-label {
   font-size: 0.85rem;
   color: #64748b;
   margin-bottom: 0.75rem;
   text-align: center;
 }
 
-.demo-buttons {
+.tenant-access-auth-page .demo-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
 }
 
-.demo-button {
+.tenant-access-auth-page .demo-button {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -238,24 +239,24 @@ body {
   color: #1e293b;
 }
 
-.demo-button:hover {
+.tenant-access-auth-page .demo-button:hover {
   transform: translateY(-2px);
   filter: brightness(0.95);
 }
 
-.demo-button.superadmin { background: #3b82f6; color: white; }
-.demo-button.tenant-admin { background: #8b5cf6; color: white; }
-.demo-button.doctor { background: #10b981; color: white; }
-.demo-button.technician { background: #f59e0b; color: white; }
-.demo-button.support { background: #6366f1; color: white; }
-.demo-button.patient { background: #ec4899; color: white; }
+.tenant-access-auth-page .demo-button.superadmin { background: #3b82f6; color: white; }
+.tenant-access-auth-page .demo-button.tenant-admin { background: #8b5cf6; color: white; }
+.tenant-access-auth-page .demo-button.doctor { background: #10b981; color: white; }
+.tenant-access-auth-page .demo-button.technician { background: #f59e0b; color: white; }
+.tenant-access-auth-page .demo-button.support { background: #6366f1; color: white; }
+.tenant-access-auth-page .demo-button.patient { background: #ec4899; color: white; }
 
 /* Form groups */
-.form-group {
+.tenant-access-auth-page .form-group {
   margin-bottom: 1.5rem;
 }
 
-.input-with-icon {
+.tenant-access-auth-page .input-with-icon {
   position: relative;
   display: flex;
   align-items: center;
@@ -265,27 +266,27 @@ body {
   background: white;
 }
 
-.input-with-icon:focus-within {
+.tenant-access-auth-page .input-with-icon:focus-within {
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.input-with-icon.error {
+.tenant-access-auth-page .input-with-icon.error {
   border-color: #ef4444;
 }
 
-.input-with-icon.success {
+.tenant-access-auth-page .input-with-icon.success {
   border-color: #10b981;
 }
 
-.input-icon {
+.tenant-access-auth-page .input-icon {
   position: absolute;
   left: 1rem;
   color: #94a3b8;
 }
 
-.input-with-icon input,
-.input-with-icon select {
+.tenant-access-auth-page .input-with-icon input,
+.tenant-access-auth-page .input-with-icon select {
   width: 100%;
   padding: 0.9rem 1rem 0.9rem 3rem;
   border: none;
@@ -295,7 +296,7 @@ body {
   outline: none;
 }
 
-.password-input-wrapper {
+.tenant-access-auth-page .password-input-wrapper {
   display: flex;
   align-items: center;
   border: 1px solid #e2e8f0;
@@ -304,32 +305,32 @@ body {
   background: white;
 }
 
-.password-input-wrapper:focus-within {
+.tenant-access-auth-page .password-input-wrapper:focus-within {
   border-color: #3b82f6;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.password-input-wrapper.error {
+.tenant-access-auth-page .password-input-wrapper.error {
   border-color: #ef4444;
 }
 
-.password-input-wrapper.success {
+.tenant-access-auth-page .password-input-wrapper.success {
   border-color: #10b981;
 }
 
-.password-input-wrapper .input-with-icon {
+.tenant-access-auth-page .password-input-wrapper .input-with-icon {
   flex: 1;
   border: none;
 }
 
-.password-actions {
+.tenant-access-auth-page .password-actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding-right: 0.5rem;
 }
 
-.password-toggle {
+.tenant-access-auth-page .password-toggle {
   background: none;
   border: none;
   color: #64748b;
@@ -339,18 +340,18 @@ body {
   padding: 0.25rem;
 }
 
-.success-icon {
+.tenant-access-auth-page .success-icon {
   color: #10b981;
 }
 
-.error-message {
+.tenant-access-auth-page .error-message {
   display: block;
   font-size: 0.75rem;
   color: #ef4444;
   margin-top: 0.25rem;
 }
 
-.error-alert {
+.tenant-access-auth-page .error-alert {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -363,7 +364,7 @@ body {
 }
 
 /* Form options */
-.form-options {
+.tenant-access-auth-page .form-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -371,29 +372,29 @@ body {
   font-size: 0.875rem;
 }
 
-.remember-me {
+.tenant-access-auth-page .remember-me {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.remember-me input[type="checkbox"] {
+.tenant-access-auth-page .remember-me input[type="checkbox"] {
   width: 16px;
   height: 16px;
   accent-color: #3b82f6;
 }
 
-.forgot-password {
+.tenant-access-auth-page .forgot-password {
   color: #3b82f6;
   text-decoration: none;
 }
 
-.forgot-password:hover {
+.tenant-access-auth-page .forgot-password:hover {
   text-decoration: underline;
 }
 
 /* Login button */
-.login-button {
+.tenant-access-auth-page .login-button {
   width: 100%;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
@@ -410,17 +411,17 @@ body {
   margin-bottom: 1rem;
 }
 
-.login-button:hover {
+.tenant-access-auth-page .login-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
 }
 
-.login-button.loading {
+.tenant-access-auth-page .login-button.loading {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.button-loader {
+.tenant-access-auth-page .button-loader {
   width: 18px;
   height: 18px;
   border: 2px solid rgba(255,255,255,0.3);
@@ -433,47 +434,47 @@ body {
   to { transform: rotate(360deg); }
 }
 
-.arrow-icon {
+.tenant-access-auth-page .arrow-icon {
   width: 18px;
   height: 18px;
   fill: white;
 }
 
 /* Tenant info & create link */
-.tenant-info {
+.tenant-access-auth-page .tenant-info {
   text-align: center;
   font-size: 0.875rem;
   color: #475569;
   margin: 1rem 0;
 }
 
-.tenant-info strong {
+.tenant-access-auth-page .tenant-info strong {
   color: #0f172a;
 }
 
-.create-tenant-link {
+.tenant-access-auth-page .create-tenant-link {
   text-align: center;
   margin: 1rem 0;
   font-size: 0.875rem;
 }
 
-.create-tenant-link a {
+.tenant-access-auth-page .create-tenant-link a {
   color: #3b82f6;
   text-decoration: none;
   font-weight: 500;
 }
 
-.create-tenant-link a:hover {
+.tenant-access-auth-page .create-tenant-link a:hover {
   text-decoration: underline;
 }
 
 /* Language selector */
-.language-selector {
+.tenant-access-auth-page .language-selector {
   text-align: center;
   margin-top: 1.5rem;
 }
 
-.language-selector select {
+.tenant-access-auth-page .language-selector select {
   padding: 0.5rem 1rem;
   border-radius: 50px;
   border: 1px solid #e2e8f0;
@@ -483,14 +484,14 @@ body {
 }
 
 /* Support Chat (keep existing styles) */
-.support-container {
+.tenant-access-auth-page .support-container {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   z-index: 100;
 }
 
-.support-button {
+.tenant-access-auth-page .support-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -506,31 +507,31 @@ body {
   height: 48px;
 }
 
-.support-button:hover {
+.tenant-access-auth-page .support-button:hover {
   background-color: #3a0ca3;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .login-page-container {
+  .tenant-access-auth-page .login-page-container {
     flex-direction: column;
   }
-  .left-side {
+  .tenant-access-auth-page .left-side {
     min-height: 400px;
   }
-  .features-grid {
+  .tenant-access-auth-page .features-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 640px) {
-  .login-card {
+  .tenant-access-auth-page .login-card {
     padding: 1.5rem;
   }
-  .features-grid {
+  .tenant-access-auth-page .features-grid {
     grid-template-columns: 1fr;
   }
-  .demo-buttons {
+  .tenant-access-auth-page .demo-buttons {
     flex-direction: column;
     align-items: stretch;
   }

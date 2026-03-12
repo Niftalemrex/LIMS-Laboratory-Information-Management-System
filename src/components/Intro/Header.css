@@ -145,7 +145,7 @@
 /* ===== BURGER MENU ===== */
 .menu-toggle {
   display: none;
-  background: none;
+  background: black;
   border: none;
   cursor: pointer;
   color: var(--color-text);

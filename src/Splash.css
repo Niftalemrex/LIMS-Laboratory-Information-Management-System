@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Hero Image */
+.hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.splash .hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1.25;
+  filter: brightness(1.8) contrast(1.2) blur(1px);
+  animation: subtleZoom 30s infinite alternate;
+}
+
+@keyframes subtleZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0,30,60,0.7) 0%, rgba(0,10,20,0.95) 100%);
+}
+
+/* Floating Particles */
+.particle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(100, 180, 255, 0.3);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 160, 255, 0.4);
+  animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(20px, -15px) rotate(120deg); }
+  66% { transform: translate(-15px, 25px) rotate(240deg); }
+  100% { transform: translate(0, 0) rotate(360deg); }
+}
+
+/* Floating DNA Helixes Container */
+.floating-dna-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-dna {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  transform-style: preserve-3d;
+  opacity: 0.15;
+  animation: rotateFloatingDNA linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes rotateFloatingDNA {
+  from { transform: rotateY(0deg) rotateX(10deg); }
+  to { transform: rotateY(360deg) rotateX(10deg); }
+}
+
+.floating-base-pair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  width: 30px;
+  height: 2px;
+  margin-left: -15px;
+  margin-top: -1px;
+}
+
+.floating-nucleotide {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+}
+
+.floating-nucleotide.left {
+  left: -8px;
+  top: -1px;
+}
+
+.floating-nucleotide.right {
+  right: -8px;
+  top: -1px;
+}
+
+.floating-bond {
+  position: absolute;
+  width: 20px;
+  height: 1px;
+  background: rgba(59, 130, 246, 0.3);
+  top: 0.5px;
+  left: 5px;
+}
+
+/* Centered Content */
+.content-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Main 3D DNA Helix */
+.dna-3d-container {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 1rem;
+  perspective: 1200px;
+  filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
+}
+
+.dna-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: rotateMainDNA 20s infinite linear;
+}
+
+@keyframes rotateMainDNA {
+  from { transform: rotateY(0deg) rotateX(5deg); }
+  to { transform: rotateY(360deg) rotateX(5deg); }
+}
+
+.base-pair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  width: 60px;
+  height: 4px;
+  margin-left: -30px;
+  margin-top: -2px;
+}
+
+.nucleotide {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 0 20px #3b82f6;
+  animation: nucleotideGlow 2s infinite alternate;
+}
+
+@keyframes nucleotideGlow {
+  0% { box-shadow: 0 0 20px #3b82f6; }
+  100% { box-shadow: 0 0 30px #8b5cf6; }
+}
+
+.nucleotide.left {
+  left: -20px;
+  top: -4px;
+}
+
+.nucleotide.right {
+  right: -20px;
+  top: -4px;
+}
+
+.hydrogen-bond {
+  position: absolute;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+  top: 1px;
+  left: 10px;
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+/* Title */
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.title-line {
+  display: block;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title-line.accent {
+  font-size: 3.2rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: #3b82f6;
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.7);
+  animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+/* Subtitle with Typewriter Effect */
+.subtitle-container {
+  height: 40px;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+}
+
+.cursor {
+  font-weight: 300;
+  color: #3b82f6;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Button */
+.button-primary {
+  position: relative;
+  background: transparent;
+  border: 2px solid rgba(59, 130, 246, 0.8);
+  padding: 1rem 3rem;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  margin: 1rem 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.button-primary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: #3b82f6;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: -1;
+}
+
+.button-primary:hover {
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 30px rgba(59, 130, 246, 0.3);
+}
+
+.button-primary:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Status */
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0.5rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  border-radius: 40px;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-top: 1rem;
+  animation: fadeIn 1s ease-out 1s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #10b981;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.status-text {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.9);
+}
+
+.status-badge {
+  background: rgba(59, 130, 246, 0.2);
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .title-line { font-size: 3rem; }
+  .title-line.accent { font-size: 2.5rem; }
+  .dna-3d-container { width: 150px; height: 150px; }
+  .button-primary { padding: 0.9rem 2rem; font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .title-line { font-size: 2.2rem; }
+  .title-line.accent { font-size: 1.8rem; }
+  .subtitle { font-size: 1rem; }
+  .button-primary { padding: 0.8rem 1.5rem; }
+}

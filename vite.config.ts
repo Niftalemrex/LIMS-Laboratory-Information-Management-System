@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
+  base: '/LIMS-Laboratory-Information-Management-System/',
   plugins: [react()],
   resolve: {
     alias: {
@@ -10,10 +11,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: [
-      'react-big-calendar',
-      'react-big-calendar/lib/css/react-big-calendar.css',
-      'moment',
-    ],
+    include: ['react-big-calendar', 'react-big-calendar/lib/css/react-big-calendar.css', 'moment'],
   },
 });

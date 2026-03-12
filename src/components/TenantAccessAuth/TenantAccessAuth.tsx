@@ -6,7 +6,11 @@ import { useAppSettings } from '../contexts/AppSettingsContext';
 import type { Language } from '../contexts/AppSettingsContext';
 import SupportChat from './SupportChat';
 import { useTenantLogs } from '../contexts/TenantLogsContext';
-import { useSystemLogs } from '../contexts/SystemLogsContext'; // ✅ Added SystemLogs
+import { useSystemLogs } from '../contexts/SystemLogsContext';
+import { Eye, EyeOff, Mail, Lock, User, Sparkles, AlertCircle, CheckCircle } from "lucide-react";
+
+// Background image – place your own lab image in assets
+import labBackground from "../assets/aboutt.jpg";
 
 // =================== RTL Languages ===================
 const rtlLanguages: Language[] = ['ar'];
@@ -21,24 +25,6 @@ const AppStoreIcon = () => (
 const PlayStoreIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
     <path d="M14.222 9.374c1.037-.61 1.037-2.137 0-2.748L11.528 5.04 8.32 8l3.207 2.96 2.694-1.586Zm-3.595 2.17L7.583 8.68 1.03 14.73c.201 1.029 1.36 1.61 2.303 1.055l7.294-4.24ZM1 13.396V2.603L6.846 8 1 13.396ZM1.03 1.27l6.553 6.05 3.044-2.81L3.333.215C2.39-.341 1.231.24 1.03 1.27Z"/>
-  </svg>
-);
-
-const SupportIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-  </svg>
-);
-
-const CloseIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-  </svg>
-);
-
-const SendIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
   </svg>
 );
 
@@ -57,12 +43,6 @@ const LIMSLogo = () => (
 );
 
 // =================== Types ===================
-type Message = { id: number; text: string; sender: 'user' | 'bot'; timestamp: Date; };
-
-// ✅ Axios defaults
-axios.defaults.baseURL = 'http://localhost:8000/';
-axios.defaults.withCredentials = true;
-
 interface User {
   id: string;
   email: string;
@@ -80,27 +60,37 @@ interface TenantData {
   created_at: string;
 }
 
+// =================== CSRF Token ===================
 const getCSRFToken = (): string => {
   const match = document.cookie.match(/csrftoken=([\w-]+)/);
   return match?.[1] ?? '';
 };
 
+// =================== Component ===================
 const TenantAccessAuth: React.FC = () => {
   const navigate = useNavigate();
   const { t, language, setLanguage } = useAppSettings();
   const { addLog } = useTenantLogs();
-  const { addLog: addSystemLog } = useSystemLogs(); // ✅ SystemLogs hook
+  const { addLog: addSystemLog } = useSystemLogs();
 
+  // Form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState<'superadmin' | 'tenant-admin' | 'doctor' | 'technician' | 'support' | 'patient'>('patient');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  
+  // Tenant data
   const [tenant, setTenant] = useState<TenantData | null>(null);
   const [loadingTenant, setLoadingTenant] = useState(true);
   const [loading, setLoading] = useState(true);
 
   const API_CURRENT_TENANT = 'http://127.0.0.1:8000/api/tenant/current/';
 
+  // Fetch current tenant (if any)
   const fetchCurrentTenant = async () => {
     try {
       const res = await fetch(API_CURRENT_TENANT, { credentials: 'include' });
@@ -109,8 +99,8 @@ const TenantAccessAuth: React.FC = () => {
       setTenant(data);
     } catch (err: any) {
       console.error(err);
-      setError(t('tenant_not_found'));
-      setTimeout(() => setError(''), 3000);
+      setErrors({ general: t('tenant_not_found') });
+      setTimeout(() => setErrors({}), 3000);
     } finally {
       setLoadingTenant(false);
     }
@@ -121,14 +111,99 @@ const TenantAccessAuth: React.FC = () => {
     setLoading(false);
   }, []);
 
-  const handleAccess = async () => {
-    setError('');
-    if (!email || !password) {
-      setError(t('email_password_required'));
-      return;
+  // Validation
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!email.trim()) {
+      newErrors.email = t('email_required');
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = t('email_invalid');
+    }
+    
+    if (!password.trim()) {
+      newErrors.password = t('password_required');
+    } else if (password.length < 6) {
+      newErrors.password = t('password_min_length');
     }
 
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Demo login
+  const handleDemoLogin = (demoRole: typeof role) => {
+    const demoEmails = {
+      superadmin: 'superadmin@demo.com',
+      'tenant-admin': 'tenantadmin@demo.com',
+      doctor: 'doctor@demo.com',
+      technician: 'technician@demo.com',
+      support: 'support@demo.com',
+      patient: 'patient@demo.com',
+    };
+    setEmail(demoEmails[demoRole]);
+    setPassword('demo123');
+    setRole(demoRole);
+    // Optionally auto-submit
+    // handleAccess();
+  };
+
+  // Main login
+  const handleAccess = async () => {
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    setErrors({});
+
+    // Simulate API delay (remove in production)
+    await new Promise(resolve => setTimeout(resolve, 800));
+
     try {
+      // Demo accounts
+      const DEMO_USERS: Record<typeof role, string> = {
+        superadmin: 'superadmin@demo.com',
+        'tenant-admin': 'tenantadmin@demo.com',
+        doctor: 'doctor@demo.com',
+        technician: 'technician@demo.com',
+        support: 'support@demo.com',
+        patient: 'patient@demo.com',
+      };
+
+      const isDemoLogin = password === 'demo123' && email === DEMO_USERS[role];
+
+      if (isDemoLogin) {
+        // Simulate successful demo login
+        const user: User = {
+          id: 'demo-' + role,
+          email,
+          role,
+          tenant: role === 'tenant-admin' ? 'demo-tenant' : undefined,
+          isPaid: true,
+        };
+
+        // Log
+        addLog({
+          user: user.email,
+          action: `Demo login: ${user.email}`,
+          status: 'Success',
+          ipAddress: '127.0.0.1',
+          details: `Role: ${user.role}, Tenant: ${user.tenant || 'N/A'}`,
+        });
+        addSystemLog({
+          user: user.email,
+          action: 'Demo login successful',
+          status: 'Success',
+          ipAddress: '127.0.0.1',
+          details: `Role: ${user.role}, Tenant: ${user.tenant || 'N/A'}`,
+        });
+
+        // Navigate
+        navigate(getDashboardPath(user.role, user.tenant));
+        setIsLoading(false);
+        return;
+      }
+
+      // Real login
       const res = await axios.post(
         '/api/login/',
         { email, password },
@@ -137,8 +212,7 @@ const TenantAccessAuth: React.FC = () => {
 
       const user: User = res.data.user;
       if (!user) {
-        setError(t('invalid_credentials'));
-        return;
+        throw new Error('Invalid credentials');
       }
 
       if (user.tenant) {
@@ -152,7 +226,7 @@ const TenantAccessAuth: React.FC = () => {
         }
       }
 
-      // ✅ Tenant logs
+      // Logs
       addLog({
         user: user.email,
         action: `User logged in: ${user.email}`,
@@ -160,8 +234,6 @@ const TenantAccessAuth: React.FC = () => {
         ipAddress: '127.0.0.1',
         details: `Role: ${user.role}, Tenant: ${user.tenant || 'N/A'}`,
       });
-
-      // ✅ System logs
       addSystemLog({
         user: user.email,
         action: 'User successfully logged in',
@@ -170,36 +242,13 @@ const TenantAccessAuth: React.FC = () => {
         details: `Role: ${user.role}, Tenant: ${user.tenant || 'N/A'}`,
       });
 
-      // Route based on role
-      switch (user.role) {
-        case 'superadmin':
-          navigate('/SuperAdminDashboard');
-          break;
-        case 'tenant-admin':
-          if (!user.isPaid) navigate('/TenantPaymentPage', { state: { tenant: user.id } });
-          else navigate('/TenantAdminDashboard', { state: { tenant: user.id } });
-          break;
-        case 'doctor':
-          navigate('/DoctorDashboard', { state: { tenant: user.tenant } });
-          break;
-        case 'technician':
-          navigate('/TechnicianDashboard', { state: { tenant: user.tenant } });
-          break;
-        case 'support':
-          navigate('/SupportDashboard', { state: { tenant: user.tenant } });
-          break;
-        case 'patient':
-          navigate('/PatientDashboard', { state: { tenant: user.tenant } });
-          break;
-        default:
-          setError(t('unknown_user_role'));
-      }
+      // Navigate
+      navigate(getDashboardPath(user.role, user.tenant));
     } catch (err: any) {
       console.error(err);
       const errorMsg = err.response?.data?.detail || t('invalid_credentials');
-      setError(errorMsg);
+      setErrors({ general: errorMsg });
 
-      // ✅ Tenant logs
       addLog({
         user: email,
         action: 'Failed login attempt',
@@ -207,8 +256,6 @@ const TenantAccessAuth: React.FC = () => {
         ipAddress: '127.0.0.1',
         details: errorMsg,
       });
-
-      // ✅ System logs
       addSystemLog({
         user: email,
         action: 'Failed login attempt',
@@ -216,6 +263,21 @@ const TenantAccessAuth: React.FC = () => {
         ipAddress: '127.0.0.1',
         details: errorMsg,
       });
+
+      setLoginAttempts(prev => prev + 1);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getDashboardPath = (role: string, tenantId?: string) => {
+    switch (role) {
+      case 'superadmin': return '/SuperAdminDashboard';
+      case 'tenant-admin': return tenantId ? `/TenantAdminDashboard?tenant=${tenantId}` : '/TenantAdminDashboard';
+      case 'doctor': return '/DoctorDashboard';
+      case 'technician': return '/TechnicianDashboard';
+      case 'support': return '/SupportDashboard';
+      default: return '/PatientDashboard';
     }
   };
 
@@ -223,105 +285,215 @@ const TenantAccessAuth: React.FC = () => {
     if (e.key === 'Enter') handleAccess();
   };
 
-  if (loading || loadingTenant) return <div className="tenant-access-container">{t('loading')}</div>;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email') setEmail(value);
+    if (name === 'password') setPassword(value);
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+    if (errors.general) setErrors(prev => ({ ...prev, general: '' }));
+  };
+
+  if (loading || loadingTenant) return <div className="auth-container">{t('loading')}</div>;
 
   return (
-    <div className="auth-container" dir={rtlLanguages.includes(language) ? 'rtl' : 'ltr'}>
-      {/* Left Side - Description */}
-      <div className="auth-description">
-        <div className="description-content">
-          <div className="logo-container"><LIMSLogo /><h2>{t('multi_tenant_lab_management')}</h2></div>
-          <div className="features-list">
-            {/* Features */}
-            <div className="feature-item">
-              <div className="feature-icon">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/></svg>
-              </div>
-              <div className="feature-text"><h3>{t('multi_tenant_architecture')}</h3><p>{t('multi_tenant_description')}</p></div>
+    <div className="login-page-container" dir={rtlLanguages.includes(language) ? 'rtl' : 'ltr'}>
+      {/* LEFT SIDE - Branding & Background Image */}
+      <div className="left-side" style={{ backgroundImage: `url(${labBackground})` }}>
+        <div className="left-side-overlay"></div>
+        <div className="left-side-content">
+          <div className="brand-header">
+            <LIMSLogo />
+            <h1 className="brand-name">Laboratory Information System</h1>
+            <p className="brand-tagline">Multi‑tenant • Secure • Scalable</p>
+          </div>
+
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-icon">🔬</div>
+              <h4>Multi‑Tenant Architecture</h4>
+              <p>Isolated data, shared infrastructure</p>
             </div>
-            <div className="feature-item">
-              <div className="feature-icon">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/></svg>
-              </div>
-              <div className="feature-text"><h3>{t('role_based_dashboards')}</h3><p>{t('role_based_description')}</p></div>
+            <div className="feature-card">
+              <div className="feature-icon">👥</div>
+              <h4>Role‑Based Dashboards</h4>
+              <p>Tailored views for every user</p>
             </div>
-            <div className="feature-item">
-              <div className="feature-icon">
-                <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/></svg>
-              </div>
-              <div className="feature-text"><h3>{t('enterprise_security')}</h3><p>{t('security_description')}</p></div>
+            <div className="feature-card">
+              <div className="feature-icon">🔒</div>
+              <h4>Enterprise Security</h4>
+              <p>256‑bit encryption, audit logs</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">📊</div>
+              <h4>Real‑time Analytics</h4>
+              <p>Monitor lab performance</p>
             </div>
           </div>
 
-          {/* Mobile App */}
           <div className="app-downloads">
-            <h3>{t('get_mobile_app')}</h3>
+            <p>Get the mobile app</p>
             <div className="download-buttons">
-              <a href="#" className="download-btn"><PlayStoreIcon /><span>{t('google_play')}</span></a>
-              <a href="#" className="download-btn"><AppStoreIcon /><span>{t('app_store')}</span></a>
+              <a href="#" className="download-btn"><PlayStoreIcon /> Google Play</a>
+              <a href="#" className="download-btn"><AppStoreIcon /> App Store</a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
-      <div className="auth-form-wrapper">
-        <div className="auth-form-container">
-          <div className="auth-form">
-            <div className="form-header"><h2>{t('welcome_back')}</h2><p>{t('sign_in_prompt')}</p></div>
-            <div className="form-group">
-              <label htmlFor="email">{t('email_address')}</label>
-              <input 
-                id="email" 
-                type="email" 
-                placeholder={t('email_placeholder')} 
-                value={email} 
-                onChange={e=>setEmail(e.target.value)} 
-                onKeyPress={handleKeyPress} 
-                autoComplete="email" 
-              />
+      {/* RIGHT SIDE - Login Form */}
+      <div className="right-side">
+        <div className="login-card-wrapper">
+          <div className="login-card">
+            {/* Welcome Header */}
+            <div className="welcome-message">
+              <h2 className="login-title">Welcome Back</h2>
+              <p className="login-subtitle">Sign in to continue to LIMS</p>
             </div>
-            <div className="form-group">
-              <label htmlFor="password">{t('password')}</label>
-              <input 
-                id="password" 
-                type="password" 
-                placeholder={t('password_placeholder')} 
-                value={password} 
-                onChange={e=>setPassword(e.target.value)} 
-                onKeyPress={handleKeyPress} 
-                autoComplete="current-password" 
-              />
+
+            {/* Demo Login Buttons */}
+            <div className="demo-login-section">
+              <p className="demo-label">Try demo accounts:</p>
+              <div className="demo-buttons">
+                <button className="demo-button superadmin" onClick={() => handleDemoLogin('superadmin')} disabled={isLoading}>
+                  <Sparkles size={16} /> Superadmin
+                </button>
+                <button className="demo-button tenant-admin" onClick={() => handleDemoLogin('tenant-admin')} disabled={isLoading}>
+                  <User size={16} /> Tenant Admin
+                </button>
+                <button className="demo-button doctor" onClick={() => handleDemoLogin('doctor')} disabled={isLoading}>
+                  <User size={16} /> Doctor
+                </button>
+                <button className="demo-button technician" onClick={() => handleDemoLogin('technician')} disabled={isLoading}>
+                  <User size={16} /> Technician
+                </button>
+                <button className="demo-button support" onClick={() => handleDemoLogin('support')} disabled={isLoading}>
+                  <User size={16} /> Support
+                </button>
+                <button className="demo-button patient" onClick={() => handleDemoLogin('patient')} disabled={isLoading}>
+                  <User size={16} /> Patient
+                </button>
+              </div>
             </div>
+
+            {/* Error Alert */}
+            {errors.general && (
+              <div className="error-alert">
+                <AlertCircle size={18} />
+                <span>{errors.general}</span>
+              </div>
+            )}
+
+            {/* Email */}
+            <div className="form-group">
+              <div className={`input-with-icon ${errors.email ? 'error' : email ? 'success' : ''}`}>
+                <Mail className="input-icon" size={20} />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="your.email@example.com"
+                  value={email}
+                  onChange={handleInputChange}
+                  onKeyPress={handleKeyPress}
+                  disabled={isLoading}
+                />
+                {email && !errors.email && <CheckCircle className="success-icon" size={18} />}
+              </div>
+              {errors.email && <span className="error-message">{errors.email}</span>}
+            </div>
+
+            {/* Password */}
+            <div className="form-group">
+              <div className={`password-input-wrapper ${errors.password ? 'error' : password ? 'success' : ''}`}>
+                <div className="input-with-icon">
+                  <Lock className="input-icon" size={20} />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    disabled={isLoading}
+                  />
+                </div>
+                <div className="password-actions">
+                  <button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)} disabled={isLoading}>
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                  {password && !errors.password && <CheckCircle className="success-icon" size={18} />}
+                </div>
+              </div>
+              {errors.password && <span className="error-message">{errors.password}</span>}
+            </div>
+
+            {/* Role Selector */}
+            <div className="form-group">
+              <div className="input-with-icon">
+                <User className="input-icon" size={20} />
+                <select
+                  name="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value as typeof role)}
+                  className="role-select"
+                  disabled={isLoading}
+                >
+                  <option value="patient">🧬 Patient</option>
+                  <option value="doctor">👨‍⚕️ Doctor</option>
+                  <option value="technician">🔧 Technician</option>
+                  <option value="support">📞 Support</option>
+                  <option value="tenant-admin">🏢 Tenant Admin</option>
+                  <option value="superadmin">👑 Superadmin</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Remember me & Forgot */}
             <div className="form-options">
               <div className="remember-me">
-                <input type="checkbox" id="remember" />
-                <label htmlFor="remember">{t('remember_me')}</label>
+                <input type="checkbox" id="remember" checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} disabled={isLoading} />
+                <label htmlFor="remember">Remember me</label>
               </div>
-              <a href="#forgot" className="forgot-password">{t('forgot_password')}</a>
+              <Link to="/forgot-password" className="forgot-password">Forgot password?</Link>
             </div>
-            {error && <div className="error-message">{error}</div>}
-            {success && <div className="success-message">{success}</div>}
-            <button onClick={handleAccess} className="signin-button">{t('sign_in')}</button>
-            
+
+            {/* Sign In Button */}
+            <button className={`login-button ${isLoading ? 'loading' : ''}`} onClick={handleAccess} disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <span className="button-loader"></span>
+                  <span>Signing In...</span>
+                </>
+              ) : (
+                <>
+                  <span>Sign In</span>
+                  <svg className="arrow-icon" viewBox="0 0 24 24">
+                    <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z" />
+                  </svg>
+                </>
+              )}
+            </button>
+
+            {/* Tenant Info */}
             {tenant && (
               <div className="tenant-info">
                 <p>Currently accessing: <strong>{tenant.company_name}</strong></p>
               </div>
             )}
-            
+
+            {/* Create Tenant Link */}
             <div className="create-tenant-link">
-              <p>Need to create a new tenant? <Link to="/superadmin/createTenant">Click here</Link></p>
+              <p>Need a new tenant? <Link to="/superadmin/createTenant">Click here</Link></p>
             </div>
-            
+
+            {/* Language Selector */}
             <div className="language-selector">
-              <select value={language} onChange={e=>setLanguage(e.target.value as Language)}>
-                <option value="en">🇬🇧 {t('english')}</option>
-                <option value="am">🇪🇹 {t('amharic')}</option>
-                <option value="ti">🇪🇷 {t('tigrinya')}</option>
-                <option value="om">🇪🇹 {t('oromo')}</option>
-                <option value="ar">🇸🇦 {t('arabic')}</option>
-                <option value="zh">🇨🇳 {t('chinese')}</option>
+              <select value={language} onChange={e => setLanguage(e.target.value as Language)}>
+                <option value="en">🇬🇧 English</option>
+                <option value="am">🇪🇹 Amharic</option>
+                <option value="ti">🇪🇷 Tigrinya</option>
+                <option value="om">🇪🇹 Oromo</option>
+                <option value="ar">🇸🇦 Arabic</option>
+                <option value="zh">🇨🇳 Chinese</option>
               </select>
             </div>
           </div>

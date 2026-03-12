@@ -8,6 +8,8 @@ import { SupportStoreProvider } from './components/Support/SupportStore';
 import { SystemLogsProvider } from './components/contexts/SystemLogsContext';
 import { TenantLogsProvider } from './components/contexts/TenantLogsContext';
 
+import Splash from "./Splash";
+import Home from "./components/Intro/Home";
 // Dashboards
 import SuperAdminDashboard from './components/superadmin/SuperAdminDashboard';
 import TenantAdminDashboard from './components/tenantadmin/TenantAdminDashboard';
@@ -41,8 +43,17 @@ function App() {
               <main className="flex-grow bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                   <Routes>
+                  <Route path="/Splash" element={<Splash/>} />
+                  <Route path="/Home" element={<Home/>} />
                     {/* Auth & Role Dashboards */}
-                    <Route path="/TenantAccessAuth" element={<TenantAccessAuth />} />
+                    <Route
+  path="/TenantAccessAuth"
+  element={
+    <TenantLogsProvider tenantId={tenantId}>
+      <TenantAccessAuth />
+    </TenantLogsProvider>
+  }
+/>
                     <Route path="/TenantPaymentPage" element={<TenantPaymentPage />} />
 
                     <Route path="/SuperAdminDashboard" element={<SuperAdminDashboard />} />
@@ -100,7 +111,7 @@ function App() {
                       path="/"
                       element={
                         <TenantLogsProvider tenantId={tenantId}>
-                          <PatientDashboard/>
+                          <Splash/>
                         </TenantLogsProvider>
                       }
                     />

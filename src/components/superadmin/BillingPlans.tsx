@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { 
   FiCheckCircle, 
   FiArrowUpRight, 
-  FiCreditCard, 
   FiDownload,
   FiPlus,
   FiZap,

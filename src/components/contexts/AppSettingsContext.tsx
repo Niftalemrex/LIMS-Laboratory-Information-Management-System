@@ -30,7 +30,7 @@ const AppSettingsContext = createContext<AppSettingsContextType>({
   setTheme: () => {},
   setLanguage: () => {},
   
-  t: (key: string, vars?: Record<string, string | number>) => key, // updated version
+  t: (key: string, _vars?: Record<string, string | number>) => key,
   applyTheme: () => {},
   isDarkMode: false,
 });

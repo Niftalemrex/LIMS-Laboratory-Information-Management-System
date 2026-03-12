@@ -23,7 +23,6 @@ const SuperAdminSidebar: React.FC<SuperAdminSidebarProps> = ({
   activeSection,
   onSectionChange,
   userMenuProfile,
-  setUserMenuProfile,
   mobileOpen,
   setMobileOpen,
 }) => {

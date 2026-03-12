@@ -26,7 +26,6 @@ const SupportSidebar: React.FC<SupportSidebarProps> = ({
   activeSection,
   onSectionChange,
   userMenuProfile,
-  setUserMenuProfile,
   mobileOpen = false,
   setMobileOpen
 }) => {
